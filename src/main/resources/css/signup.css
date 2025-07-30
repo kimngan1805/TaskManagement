@@ -1,44 +1,171 @@
-.left-pane {
+.form-container {
+    color: #4C6BB6;
+    -fx-padding: 40 60;
     -fx-background-color: white;
+    -fx-pref-width: 400px;
+}
+/* Label */
+label {
+    -fx-text-fill: #4C6BB6;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
 }
 
-.heading {
+/* Title & subtitle */
+.title {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: #000;
+    -fx-text-fill: #222;
 }
 
-.subtext {
+.subtitle {
+    -fx-font-size: 16px;
     -fx-text-fill: #555;
-    -fx-font-size: 14px;
-    -fx-padding: 0 0 10 0;
 }
 
-.social-btn {
+/* Button styles */
+.google-button, .apple-button, .main-button {
+    -fx-pref-width: 280px;
+    -fx-pref-height: 40px;
+    -fx-background-radius: 20px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 20px;
+}
+.google-button {
     -fx-background-color: white;
     -fx-border-color: #ccc;
-    -fx-text-fill: #000;
-    -fx-padding: 8 16 8 16;
-    -fx-font-size: 14px;
-    -fx-pref-width: 300px;
-    -fx-background-radius: 25px;
-    -fx-border-radius: 25px;
-    -fx-alignment: CENTER_LEFT;
-    -fx-graphic-text-gap: 10;
+    -fx-border-width: 1;
 }
 
-.signup-btn {
+.apple-button {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1;
+}
+
+.main-button {
     -fx-background-color: black;
     -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-padding: 8 16 8 16;
-    -fx-pref-width: 300px;
-    -fx-background-radius: 25px;
-    -fx-border-radius: 25px;
 }
 
-.footer-text {
+.policy-text {
     -fx-font-size: 10px;
     -fx-text-fill: #777;
-    -fx-padding: 10 0 0 0;
+    -fx-padding: 10 20 0 20;
+    -fx-text-alignment: center;
+}
+
+.or-text {
+    -fx-text-fill: #999;
+    -fx-font-weight: bold;
+}
+.form-container {
+    -fx-padding: 40 60;
+    -fx-background-color: white;
+    -fx-pref-width: 400px;
+}
+
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.subtitle {
+    -fx-font-size: 16px;
+    -fx-text-fill: #555;
+}
+
+.google-button, .apple-button, .main-button {
+    -fx-pref-width: 280px;
+    -fx-pref-height: 40px;
+    -fx-background-radius: 20px;
+    -fx-font-weight: bold;
+}
+
+/* Google & Apple buttons */
+.google-button, .apple-button {
+    -fx-background-color: white;
+    -fx-border-color: #4C6BB6;
+    -fx-text-fill: #4C6BB6;
+    -fx-border-width: 1.5px;
+}
+
+
+/* Main button */
+.main-button {
+    -fx-background-color: #4C6BB6;
+    -fx-text-fill: white;
+    -fx-border-color: #4C6BB6;
+    -fx-border-width: 1.5px;
+}
+.main-button:hover {
+    -fx-background-color: #3A57A2;
+}
+
+/* OR text */
+.or-text {
+    -fx-text-fill: #999;
+    -fx-font-weight: bold;
+}
+/* Textfield (input type text, password, email, etc.) */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    border: 2px solid #4C6BB6;
+    border-radius: 8px;
+    padding: 8px;
+    color: #4C6BB6;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Khi focus (click vào) */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #4C6BB6;
+    box-shadow: 0 0 0 2px rgba(76, 107, 182, 0.3);
+}
+
+/* Button nếu cần cũng chỉnh luôn */
+button {
+    background-color: #4C6BB6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3A57A2;
+}
+/* Policy text */
+.policy-text {
+    -fx-font-size: 10px;
+    -fx-text-fill: #777;
+    -fx-padding: 10 20 0 20;
+    -fx-text-alignment: center;
+}
+
+/* TextFields & PasswordFields */
+.text-field, .password-field {
+    -fx-border-color: #4C6BB6;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-text-fill: #4C6BB6;
+    -fx-padding: 8px;
+    -fx-font-size: 14px;
+}
+
+.text-field, .password-field {
+    -fx-border-color: #4C6BB6;
+    -fx-effect: dropshadow(three-pass-box, rgba(76,107,182,0.3), 6, 0.0, 0, 2);
 }

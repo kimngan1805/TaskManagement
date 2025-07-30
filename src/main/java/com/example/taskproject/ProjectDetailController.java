@@ -59,8 +59,11 @@ public class ProjectDetailController {
 
     @FXML
     private void initialize() {
+        System.out.println("Initialize called");
+        System.out.println("taskNameCol is null: " + (taskNameCol == null));
+        System.out.println("taskTable is null: " + (taskTable == null));
+
         setupTaskTable();
-        // Add some sample tasks
         addSampleTasks();
     }
 

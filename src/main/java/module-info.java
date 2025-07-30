@@ -7,5 +7,6 @@ module com.example.taskproject {
 
     opens com.example.taskproject to javafx.fxml;
     exports com.example.taskproject;
-
+    opens com.example.taskproject.controller to javafx.fxml;
+    exports com.example.taskproject.controller;
 }
