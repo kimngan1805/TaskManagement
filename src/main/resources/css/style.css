@@ -1,0 +1,360 @@
+/* Root Styles */
+.root {
+    -fx-font-family: "Arial", "Helvetica", sans-serif;
+    -fx-background-color: #f5f7fa;
+    -fx-padding: 0 35 0 0;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    -fx-background-color: linear-gradient(to bottom,  #3b5bdb,#3b5bdb);
+    -fx-padding: 0;
+}
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.logo-section {
+    -fx-padding: 20 0 20 0;
+}
+.logo-section ImageView {
+    -fx-background-color: transparent !important;
+    -fx-background-image: null !important;
+    -fx-blend-mode: multiply;
+}
+
+
+.logo-circle {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-radius: 30;
+    -fx-padding: 15;
+}
+
+.logo-icon {
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+}
+
+.nav-menu {
+    -fx-padding: 0 20 20 20;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12 20 12 20;
+    -fx-background-radius: 8;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.nav-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: white;
+}
+
+.nav-active {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-text-fill: white;
+}
+
+/* Main Content Styles */
+.main-content {
+    -fx-background-color: #f5f7fa;
+    -fx-padding: 0 0 0 10;
+    -fx-margin: 0 42 0 0;
+}
+/* Header Styles */
+.header {
+    -fx-background-color: white;
+    -fx-padding: 15 30 15 30;
+    -fx-border-color: #4C6BB6;
+    -fx-border-width: 2;
+    -fx-border-radius: 12;
+}
+
+.breadcrumb {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 14px;
+}
+
+.header-button {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.header-button:hover {
+    -fx-background-color: #e5e9f2;
+}
+
+.user-profile {
+    -fx-padding: 5;
+}
+
+.user-avatar {
+    -fx-background-color: #10b981;
+    -fx-background-radius: 18;
+}
+
+.user-initial {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.user-name {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+}
+
+.user-role {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6b7280;
+}
+
+/* Welcome Banner Styles */
+.welcome-banner {
+    -fx-background-color: linear-gradient(to right, #4f46e5, #7c3aed);
+    -fx-background-radius: 12;
+    -fx-padding: 50 30 30 30;
+    -fx-border-color: #4C6BB6;
+    -fx-border-width: 2;
+    -fx-border-radius: 12;
+}
+
+.welcome-title {
+    -fx-text-fill: white;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.welcome-subtitle {
+    -fx-text-fill: rgba(255, 255, 255, 0.9);
+    -fx-font-size: 16px;
+}
+
+.game-studio-button {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 24 12 24;
+    -fx-background-radius: 25;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.game-studio-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Content Section Styles */
+.content-section {
+    -fx-padding: 30;
+    -fx-border-color: #4C6BB6;
+    -fx-border-width: 2;
+    -fx-border-radius: 12;
+    -fx-background-color: white;
+}
+.section-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+}
+
+.card-count {
+    -fx-font-size: 16px;
+    -fx-text-fill: #6b7280;
+}
+
+.card-count-number {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+    -fx-background-color: #e5e9f2;
+    -fx-background-radius: 4;
+    -fx-padding: 4 8 4 8;
+}
+
+.add-button {
+    -fx-background-color: #4f46e5;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8 16 8 16;
+    -fx-background-radius: 6;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.add-button:hover {
+    -fx-background-color: #4338ca;
+}
+
+/* Category Tabs */
+.category-tabs {
+    -fx-padding: 10 0 10 0;
+}
+
+.category-tab {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 14px;
+    -fx-padding: 8 0 8 0;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.category-tab:hover {
+    -fx-text-fill: #4f46e5;
+}
+
+.tab-active {
+    -fx-text-fill: #4f46e5;
+    -fx-border-color: #4f46e5;
+    -fx-border-width: 0 0 2 0;
+    -fx-font-weight: bold;
+}
+
+/* Search and Controls */
+.search-field {
+    -fx-background-color: white;
+    -fx-padding: 12 16 12 16;
+    -fx-background-radius: 8;
+    -fx-border-color: #e5e9f2;
+    -fx-border-radius: 8;
+    -fx-font-size: 14px;
+    -fx-min-width: 300;
+}
+
+.search-field:focused {
+    -fx-border-color: #4f46e5;
+}
+
+.control-button {
+    -fx-background-color: white;
+    -fx-text-fill: #6b7280;
+    -fx-padding: 10 16 10 16;
+    -fx-background-radius: 8;
+    -fx-border-color: #e5e9f2;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+}
+
+.control-button:hover {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #d1d5db;
+}
+
+.export-button {
+    -fx-background-color: #10b981;
+    -fx-text-fill: white;
+    -fx-padding: 10 16 10 16;
+    -fx-background-radius: 8;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.export-button:hover {
+    -fx-background-color: #059669;
+}
+
+/* Game Cards */
+.cards-grid {
+    -fx-padding: 20 0 0 0;
+    -fx-hgap: 20;
+    -fx-vgap: 20;
+}
+
+.game-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+    -fx-cursor: hand;
+    -fx-min-height: 180;
+    -fx-pref-height: 200;
+    -fx-max-width: 350;
+    -fx-pref-width: 280;
+    -fx-spacing: 10;
+}
+
+.game-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 15, 0, 0, 4);
+    -fx-translate-y: -2;
+}
+
+.card-purple {
+    -fx-border-color: #8b5cf6;
+    -fx-border-width: 0 0 0 4;
+    -fx-border-radius: 12 0 0 12;
+}
+
+.card-orange {
+    -fx-border-color: #f59e0b;
+    -fx-border-width: 0 0 0 4;
+    -fx-border-radius: 12 0 0 12;
+}
+
+.card-yellow {
+    -fx-border-color: #eab308;
+    -fx-border-width: 0 0 0 4;
+    -fx-border-radius: 12 0 0 12;
+}
+
+.card-blue {
+    -fx-border-color: #3b82f6;
+    -fx-border-width: 0 0 0 4;
+    -fx-border-radius: 12 0 0 12;
+}
+
+.card-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+}
+
+.card-category {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6b7280;
+}
+
+.card-info {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6b7280;
+}
+
+.card-info-row {
+    -fx-spacing: 8;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.card-info-spacer {
+    -fx-pref-width: 20;
+}
+
+/* Responsive adjustments */
+.game-card Label {
+    -fx-wrap-text: true;
+}
+
+/* Hover effects for interactive elements */
+.nav-button, .header-button, .game-studio-button, .add-button,
+.category-tab, .control-button, .export-button, .game-card {
+    -fx-cursor: hand;
+}
+
+/* Focus styles for accessibility */
+.nav-button:focused, .header-button:focused, .search-field:focused,
+.control-button:focused, .export-button:focused {
+    -fx-effect: dropshadow(gaussian, #4f46e5, 5, 0, 0, 0);
+}

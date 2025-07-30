@@ -1,0 +1,44 @@
+.left-pane {
+    -fx-background-color: white;
+}
+
+.heading {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000;
+}
+
+.subtext {
+    -fx-text-fill: #555;
+    -fx-font-size: 14px;
+    -fx-padding: 0 0 10 0;
+}
+
+.social-btn {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-text-fill: #000;
+    -fx-padding: 8 16 8 16;
+    -fx-font-size: 14px;
+    -fx-pref-width: 300px;
+    -fx-background-radius: 25px;
+    -fx-border-radius: 25px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-graphic-text-gap: 10;
+}
+
+.signup-btn {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8 16 8 16;
+    -fx-pref-width: 300px;
+    -fx-background-radius: 25px;
+    -fx-border-radius: 25px;
+}
+
+.footer-text {
+    -fx-font-size: 10px;
+    -fx-text-fill: #777;
+    -fx-padding: 10 0 0 0;
+}

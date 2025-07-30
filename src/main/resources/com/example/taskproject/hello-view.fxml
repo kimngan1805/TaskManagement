@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.taskproject.HelloController">
+    <left>
+        <!-- Sidebar -->
+        <VBox prefHeight="1149.0" prefWidth="224.0" styleClass="sidebar">
+            <!-- Logo Section -->
+            <VBox alignment="CENTER" prefHeight="120.0" styleClass="logo-section">
+            <children>
+                <ImageView fitHeight="83.0" fitWidth="122.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@image/logo.png" />
+                    </image>
+                </ImageView>
+            </children>
+            </VBox>
+
+            <!-- Navigation Menu -->
+            <VBox prefHeight="470.0" prefWidth="225.0" spacing="5.0" styleClass="nav-menu">
+                <Button mnemonicParsing="false" prefHeight="46.0" prefWidth="224.0" styleClass="nav-button,nav-active" text="Home">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0">
+                            <image>
+                                <Image url="@image/home.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="209.0" styleClass="nav-button" text=" Project">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0">
+                            <image>
+                                <Image url="@image/project.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="209.0" styleClass="nav-button" text=" Note">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0">
+                            <image>
+                                <Image url="@image/note.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="🏠 My Rooms" />
+                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="📊 Activity" />
+                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="📈 Analysis" />
+                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="👥 Contacts" />
+
+                <Region VBox.vgrow="ALWAYS" />
+
+                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="⚙️ Settings" />
+                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="🚪 Logout" />
+            </VBox>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+        <!-- Main Content -->
+        <VBox prefHeight="1102.0" prefWidth="1214.0" styleClass="main-content" stylesheets="@../../../css/style.css">
+
+            <!-- Header -->
+            <HBox alignment="CENTER_RIGHT" prefHeight="74.0" prefWidth="988.0" spacing="15.0" styleClass="header">
+                <HBox alignment="CENTER_LEFT" spacing="10.0" HBox.hgrow="ALWAYS">
+                    <Label styleClass="breadcrumb">
+                        <graphic>
+                            <ImageView fitHeight="14.0" fitWidth="14.0">
+                                <image>
+                                    <Image url="@image/home.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Label>
+                    <Label styleClass="breadcrumb" text="&gt;" />
+                    <Label styleClass="breadcrumb" text="..." />
+                </HBox>
+
+                <Button mnemonicParsing="false" styleClass="header-button">
+                    <graphic>
+                        <Label styleClass="breadcrumb">
+                            <graphic>
+                                <ImageView fitHeight="14.0" fitWidth="14.0">
+                                    <image>
+                                        <Image url="@image/brightness.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Label>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false" styleClass="header-button">
+                    <graphic>
+                        <Label styleClass="breadcrumb">
+                            <graphic>
+                                <ImageView fitHeight="14.0" fitWidth="14.0">
+                                    <image>
+                                        <Image url="@image/email.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Label>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false" styleClass="header-button">
+                    <graphic>
+                        <Label styleClass="breadcrumb">
+                            <graphic>
+                                <ImageView fitHeight="14.0" fitWidth="14.0">
+                                    <image>
+                                        <Image url="@image/bell.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Label>
+                    </graphic>
+                </Button>
+
+                <HBox alignment="CENTER" spacing="10.0" styleClass="user-profile">
+                    <HBox alignment="CENTER" prefHeight="35.0" prefWidth="35.0" styleClass="user-avatar">
+                        <ImageView fitHeight="24.0" fitWidth="24.0">
+                            <image>
+                                <Image url="@image/user.png" />
+                            </image>
+                        </ImageView>
+                    </HBox>
+                    <VBox alignment="CENTER_LEFT">
+                        <Label styleClass="user-name" text="Osama.A" />
+                        <Label styleClass="user-role" text="Teacher" />
+                    </VBox>
+                </HBox>
+            </HBox>
+            <Region prefHeight="20.0" style="-fx-min-height: 20px; -fx-pref-height: 20px;" />
+            <!-- Welcome Banner -->
+            <HBox alignment="CENTER" prefHeight="197.0" prefWidth="1092.0" styleClass="welcome-banner">
+                <VBox alignment="CENTER" prefWidth="200.0">
+                    <ImageView fitHeight="132.0" fitWidth="161.0">
+                        <image>
+                            <Image url="@image/banner.png" />
+                        </image>
+                    </ImageView>
+                </VBox>
+                <VBox alignment="CENTER" spacing="10.0" HBox.hgrow="ALWAYS">
+                    <Label styleClass="welcome-title" text="Welcome back, Osama!" />
+                    <Label styleClass="welcome-subtitle" text="Always stay updated in your student portal." />
+                    <Label styleClass="welcome-subtitle" text="Let's make learning as fun as a video game!" />
+                </VBox>
+
+                <VBox alignment="CENTER" prefWidth="200.0">
+                    <ImageView fitHeight="132.0" fitWidth="161.0">
+                        <image>
+                            <Image url="@image/plan.png" />
+                        </image>
+                    </ImageView>
+                </VBox>
+            </HBox>
+            <Region prefHeight="20.0" style="-fx-min-height: 20px; -fx-pref-height: 20px;" />
+            <!-- Games Library Section -->
+            <VBox prefHeight="706.0" prefWidth="989.0" spacing="20.0" styleClass="content-section">
+                <!-- Section Header -->
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <Label styleClass="section-title" text="Games Library" />
+                    <Label styleClass="card-count" text="Total Card Count:" />
+                    <Label fx:id="cardCountNumber" styleClass="card-count-number" text="04" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <!-- Thay dòng Add button -->
+                    <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleAddButton" styleClass="add-button" text="Add +" >
+                        <graphic>
+                            <ImageView fitHeight="14.0" fitWidth="14.0">
+                                <image>
+                                    <Image url="@image/more.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </HBox>
+
+                <!-- Category Tabs -->
+                <HBox spacing="20.0" styleClass="category-tabs">
+                    <Button mnemonicParsing="false" styleClass="category-tab,tab-active" text="All Categories" />
+                    <Button mnemonicParsing="false" styleClass="category-tab" text="1st" />
+                    <Button mnemonicParsing="false" styleClass="category-tab" text="3rd" />
+                    <Button mnemonicParsing="false" styleClass="category-tab" text="11th" />
+                </HBox>
+
+                <!-- Search and Controls -->
+                <HBox alignment="CENTER_LEFT" spacing="15.0">
+                    <TextField promptText="🔍 Search anything" styleClass="search-field" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button mnemonicParsing="false" styleClass="control-button" text="📋" />
+                    <Button mnemonicParsing="false" styleClass="control-button" text="📄" />
+                    <Button mnemonicParsing="false" styleClass="control-button" text="Sort">
+                        <graphic>
+                            <ImageView fitHeight="14.0" fitWidth="14.0">
+                                <image>
+                                    <Image url="@image/sorting.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Button mnemonicParsing="false" styleClass="control-button" text="Filter Add 🔧" />
+                    <Button mnemonicParsing="false" styleClass="export-button" text="Export 📊" />
+                </HBox>
+
+                <!-- Game Cards Grid -->
+                <GridPane fx:id="cardsGrid" hgap="20.0" prefHeight="452.0" prefWidth="740.0" styleClass="cards-grid" vgap="20.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+
+                    <!-- Card 1: Intro To AI -->
+                    <VBox spacing="10.0" styleClass="game-card,card-purple" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <HBox alignment="CENTER_RIGHT">
+                            <Label text="⋯" />
+                        </HBox>
+                        <VBox spacing="5.0">
+                            <Label styleClass="card-title" text="Intro To AI" />
+                            <Label styleClass="card-category" text="Algorithm" />
+                        </VBox>
+                        <VBox spacing="8.0">
+                            <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                <Label text="📅" />
+                                <Label styleClass="card-info" text="Mar 20, 2024" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Label text="👥" />
+                                <Label styleClass="card-info" text="Students: 8" />
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                <Label text="⏱️" />
+                                <Label styleClass="card-info" text="45 Min" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Label text="❓" />
+                                <Label styleClass="card-info" text="Q&amp;A: 20" />
+                            </HBox>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Card 2: Basic Art -->
+                    <VBox spacing="10.0" styleClass="game-card,card-orange" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <HBox alignment="CENTER_RIGHT">
+                            <Label text="⋯" />
+                        </HBox>
+                        <VBox spacing="5.0">
+                            <Label styleClass="card-title" text="Basic Art" />
+                            <Label styleClass="card-category" text="Art" />
+                        </VBox>
+                        <VBox spacing="8.0">
+                            <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                <Label text="📅" />
+                                <Label styleClass="card-info" text="Mar 20, 2024" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Label text="👥" />
+                                <Label styleClass="card-info" text="Students: 8" />
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                <Label text="⏱️" />
+                                <Label styleClass="card-info" text="45 Min" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Label text="❓" />
+                                <Label styleClass="card-info" text="Q&amp;A: 20" />
+                            </HBox>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Card 3: HTML & CSS Class -->
+                    <VBox spacing="10.0" styleClass="game-card,card-yellow" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                        <HBox alignment="CENTER_RIGHT">
+                            <Label text="⋯" />
+                        </HBox>
+                        <VBox spacing="5.0">
+                            <Label styleClass="card-title" text="HTML &amp; CSS Class" />
+                            <Label styleClass="card-category" text="Programming" />
+                        </VBox>
+                        <VBox spacing="8.0">
+                            <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                <Label text="📅" />
+                                <Label styleClass="card-info" text="Mar 20, 2024" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Label text="👥" />
+                                <Label styleClass="card-info" text="Students: 8" />
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                <Label text="⏱️" />
+                                <Label styleClass="card-info" text="45 Min" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Label text="❓" />
+                                <Label styleClass="card-info" text="Q&amp;A: 20" />
+                            </HBox>
+                        </VBox>
+                    </VBox>
+                    <!-- Card 4: Simple Past Tense -->
+                    <VBox spacing="10.0" styleClass="game-card,card-blue" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <HBox alignment="CENTER_RIGHT">
+                            <Label text="⋯" />
+                        </HBox>
+                        <VBox spacing="5.0">
+                            <Label styleClass="card-title" text="Simple Past Tense" />
+                            <Label styleClass="card-category" text="English" />
+                        </VBox>
+                        <VBox spacing="8.0">
+                            <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                <Label text="📅" />
+                                <Label styleClass="card-info" text="Mar 20, 2024" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Label text="👥" />
+                                <Label styleClass="card-info" text="Students: 8" />
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                <Label text="⏱️" />
+                                <Label styleClass="card-info" text="45 Min" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Label text="❓" />
+                                <Label styleClass="card-info" text="Q&amp;A: 20" />
+                            </HBox>
+                        </VBox>
+                    </VBox>
+                </GridPane>
+            </VBox>
+        </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
