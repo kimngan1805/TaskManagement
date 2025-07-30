@@ -1,5 +1,8 @@
 package com.example.taskproject;
 
+import com.example.taskproject.model.ProjectData;
+import com.example.taskproject.model.User;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -503,58 +506,5 @@ public class HelloController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    // User class for member management
-    public static class User {
-        private final int id;
-        private final String name;
-        private final String email;
-
-        public User(int id, String name, String email) {
-            this.id = id;
-            this.name = name;
-            this.email = email;
-        }
-
-        public int getId() { return id; }
-        public String getName() { return name; }
-        public String getEmail() { return email; }
-
-        @Override
-        public String toString() {
-            return name + " (" + email + ")";
-        }
-    }
-
-    // Updated ProjectData class with members
-    public static class ProjectData {
-        private final String name;
-        private final String description;
-        private final LocalDate startDate;
-        private final LocalDate dueDate;
-        private final String students;
-        private final ObservableList<User> members;
-        private final String qaCount;
-
-        public ProjectData(String name, String description, LocalDate startDate, LocalDate dueDate,
-                           String students, ObservableList<User> members, String qaCount) {
-            this.name = name;
-            this.description = description;
-            this.startDate = startDate;
-            this.dueDate = dueDate;
-            this.students = students;
-            this.members = members;
-            this.qaCount = qaCount;
-        }
-
-        // Getters
-        public String getName() { return name; }
-        public String getDescription() { return description; }
-        public LocalDate getStartDate() { return startDate; }
-        public LocalDate getDueDate() { return dueDate; }
-        public String getStudents() { return students; }
-        public ObservableList<User> getMembers() { return members; }
-        public String getQaCount() { return qaCount; }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.taskproject;
 
+import com.example.taskproject.model.ProjectData;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -45,7 +46,7 @@ public class ProjectDetailController {
     @FXML private TableColumn<Task, String> taskStatusCol;
     @FXML private TableColumn<Task, Void> taskActionsCol;
 
-    private HelloController.ProjectData projectData;
+    private ProjectData projectData;
     private final ObservableList<Task> taskList = FXCollections.observableArrayList();
 
     // Mock user emails for demo
@@ -118,7 +119,7 @@ public class ProjectDetailController {
         ));
     }
 
-    public void setProjectData(HelloController.ProjectData data) {
+    public void setProjectData(ProjectData data) {
         this.projectData = data;
         populateProjectDetails();
     }
