@@ -12,19 +12,19 @@ public class ProjectData {
     private final String description;
     private final LocalDate startDate;
     private final LocalDate dueDate;
-    private final String students;
+    private final String category; // Changed from students to category
     private final ObservableList<User> members;
-    private final String qaCount;
+    private final String priorityAndBudget; // Changed from qaCount to priorityAndBudget
 
     public ProjectData(String name, String description, LocalDate startDate, LocalDate dueDate,
-                       String students, ObservableList<User> members, String qaCount) {
+                       String category, ObservableList<User> members, String priorityAndBudget) {
         this.name = name;
         this.description = description;
         this.startDate = startDate;
         this.dueDate = dueDate;
-        this.students = students;
+        this.category = category;
         this.members = members;
-        this.qaCount = qaCount;
+        this.priorityAndBudget = priorityAndBudget;
     }
 
     // Getters
@@ -44,16 +44,26 @@ public class ProjectData {
         return dueDate;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    // Keep old method names for backward compatibility
     public String getStudents() {
-        return students;
+        return category; // Return category for backward compatibility
     }
 
     public ObservableList<User> getMembers() {
         return members;
     }
 
+    public String getPriorityAndBudget() {
+        return priorityAndBudget;
+    }
+
+    // Keep old method name for backward compatibility
     public String getQaCount() {
-        return qaCount;
+        return priorityAndBudget; // Return priorityAndBudget for backward compatibility
     }
 
     @Override
@@ -63,9 +73,9 @@ public class ProjectData {
                 ", description='" + description + '\'' +
                 ", startDate=" + startDate +
                 ", dueDate=" + dueDate +
-                ", students='" + students + '\'' +
+                ", category='" + category + '\'' +
                 ", members=" + members.size() + " members" +
-                ", qaCount='" + qaCount + '\'' +
+                ", priorityAndBudget='" + priorityAndBudget + '\'' +
                 '}';
     }
 }

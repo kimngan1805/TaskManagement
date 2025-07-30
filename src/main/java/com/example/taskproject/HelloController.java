@@ -45,6 +45,26 @@ public class HelloController {
             new User(8, "Emma Taylor", "emma.taylor@example.com")
     );
 
+    // Project categories for dropdown
+    private final List<String> projectCategories = Arrays.asList(
+            "Web Development",
+            "Mobile App",
+            "Data Analysis",
+            "Machine Learning",
+            "UI/UX Design",
+            "Game Development",
+            "Research",
+            "Marketing Campaign"
+    );
+
+    // Priority levels
+    private final List<String> priorityLevels = Arrays.asList(
+            "Low",
+            "Medium",
+            "High",
+            "Critical"
+    );
+
     @FXML
     private void handleAddButton() {
         showAddProjectDialog();
@@ -57,108 +77,135 @@ public class HelloController {
         dialogStage.setTitle("Add New Project");
         dialogStage.setResizable(false);
 
-        // Create main container
+        // Create main container with modern styling
         VBox mainContainer = new VBox();
-        mainContainer.setSpacing(20);
-        mainContainer.setPadding(new Insets(30));
-        mainContainer.setStyle("-fx-background-color: white; -fx-background-radius: 20;");
-        mainContainer.setPrefWidth(450);
+        mainContainer.setSpacing(25);
+        mainContainer.setPadding(new Insets(35));
+        mainContainer.setStyle("-fx-background-color: white; -fx-background-radius: 25; " +
+                "-fx-border-color: rgba(76, 107, 182, 0.2); -fx-border-width: 1; -fx-border-radius: 25; " +
+                "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 30, 0, 0, 10);");
+        mainContainer.setPrefWidth(550);
 
-        // Header with icon and close button
+        // Modern header with gradient icon
         HBox header = new HBox();
         header.setAlignment(Pos.CENTER_LEFT);
-        header.setSpacing(15);
+        header.setSpacing(20);
 
-        // Icon circle
+        // Modern icon container
         VBox iconContainer = new VBox();
         iconContainer.setAlignment(Pos.CENTER);
-        iconContainer.setPrefSize(60, 60);
-        iconContainer.setStyle("-fx-background-color: #e8f2ff; -fx-background-radius: 30;");
+        iconContainer.setPrefSize(70, 70);
+        iconContainer.setStyle("-fx-background-color: linear-gradient(135deg, rgba(76, 107, 182, 0.15), rgba(99, 102, 241, 0.15)); " +
+                "-fx-background-radius: 35; -fx-border-color: rgba(76, 107, 182, 0.3); -fx-border-width: 2; -fx-border-radius: 35;");
 
-        Label iconLabel = new Label("📝");
-        iconLabel.setStyle("-fx-font-size: 24px;");
+        Label iconLabel = new Label("🚀");
+        iconLabel.setStyle("-fx-font-size: 32px;");
         iconContainer.getChildren().add(iconLabel);
 
-        // Title
-        Label titleLabel = new Label("Create Project");
-        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;");
+        // Modern title
+        Label titleLabel = new Label("Create New Project");
+        titleLabel.setStyle("-fx-font-size: 28px; -fx-font-weight: 700; -fx-text-fill: #1e293b;");
 
-        // Close button
+        // Modern close button
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         Button closeButton = new Button("✕");
-        closeButton.setStyle("-fx-background-color: #f5f5f5; -fx-background-radius: 20; " +
-                "-fx-border-color: transparent; -fx-text-fill: #666; " +
-                "-fx-font-size: 16px; -fx-min-width: 35; -fx-min-height: 35;");
+        closeButton.setStyle("-fx-background-color: rgba(248, 250, 252, 0.8); -fx-background-radius: 25; " +
+                "-fx-border-color: rgba(226, 232, 240, 0.6); -fx-border-width: 1; -fx-border-radius: 25; " +
+                "-fx-text-fill: #64748b; -fx-font-size: 18px; -fx-min-width: 45; -fx-min-height: 45; -fx-cursor: hand;");
         closeButton.setOnAction(e -> dialogStage.close());
 
         header.getChildren().addAll(iconContainer, titleLabel, spacer, closeButton);
 
         // Form fields container
         VBox formContainer = new VBox();
-        formContainer.setSpacing(20);
+        formContainer.setSpacing(25);
 
         // Project Name
-        VBox nameGroup = createFieldGroup("Project Name", createStyledTextField("Enter project name"));
+        VBox nameGroup = createModernFieldGroup("Project Name", createModernTextField("Enter project name"));
         TextField projectNameField = (TextField) ((VBox) nameGroup.getChildren().get(1)).getChildren().get(0);
 
         // Description
-        VBox descGroup = createFieldGroup("Description", createStyledTextArea("Enter project description"));
+        VBox descGroup = createModernFieldGroup("Description", createModernTextArea("Enter project description"));
         TextArea descriptionField = (TextArea) ((VBox) descGroup.getChildren().get(1)).getChildren().get(0);
 
         // Date fields in a row
         HBox datesRow = new HBox();
-        datesRow.setSpacing(15);
+        datesRow.setSpacing(20);
 
-        VBox startDateGroup = createFieldGroup("Start Date", createStyledDatePicker());
+        VBox startDateGroup = createModernFieldGroup("Start Date", createModernDatePicker());
         DatePicker startDatePicker = (DatePicker) ((VBox) startDateGroup.getChildren().get(1)).getChildren().get(0);
         startDatePicker.setValue(LocalDate.now());
 
-        VBox dueDateGroup = createFieldGroup("Due Date", createStyledDatePicker());
+        VBox dueDateGroup = createModernFieldGroup("Due Date", createModernDatePicker());
         DatePicker dueDatePicker = (DatePicker) ((VBox) dueDateGroup.getChildren().get(1)).getChildren().get(0);
-        dueDatePicker.setValue(LocalDate.now().plusDays(7));
+        dueDatePicker.setValue(LocalDate.now().plusDays(14));
 
         datesRow.getChildren().addAll(startDateGroup, dueDateGroup);
 
-        // Other fields in a row
-        HBox otherFieldsRow = new HBox();
-        otherFieldsRow.setSpacing(15);
+        // Project details in a row
+        HBox projectDetailsRow = new HBox();
+        projectDetailsRow.setSpacing(20);
 
-        VBox studentsGroup = createFieldGroup("Students", createStyledTextField("8"));
-        TextField studentsField = (TextField) ((VBox) studentsGroup.getChildren().get(1)).getChildren().get(0);
+        // Project Category dropdown
+        VBox categoryGroup = createModernFieldGroup("Category", createCategoryComboBox());
+        ComboBox<String> categoryField = (ComboBox<String>) ((VBox) categoryGroup.getChildren().get(1)).getChildren().get(0);
 
-        // Thay thế Duration bằng Member Search
+        // Member Search
         VBox memberGroup = createMemberSearchGroup();
 
-        otherFieldsRow.getChildren().addAll(studentsGroup, memberGroup);
+        projectDetailsRow.getChildren().addAll(categoryGroup, memberGroup);
 
-        // Q&A field
-        VBox qaGroup = createFieldGroup("Q&A Count", createStyledTextField("20"));
-        TextField qaField = (TextField) ((VBox) qaGroup.getChildren().get(1)).getChildren().get(0);
+        // Priority and Budget row
+        HBox priorityBudgetRow = new HBox();
+        priorityBudgetRow.setSpacing(20);
 
-        formContainer.getChildren().addAll(nameGroup, descGroup, datesRow, otherFieldsRow, qaGroup);
+        // Priority level
+        VBox priorityGroup = createModernFieldGroup("Priority", createPriorityComboBox());
+        ComboBox<String> priorityField = (ComboBox<String>) ((VBox) priorityGroup.getChildren().get(1)).getChildren().get(0);
 
-        // Buttons
+        // Estimated Budget
+        VBox budgetGroup = createModernFieldGroup("Budget (USD)", createModernTextField("Enter estimated budget"));
+        TextField budgetField = (TextField) ((VBox) budgetGroup.getChildren().get(1)).getChildren().get(0);
+        budgetField.setPromptText("e.g., 5000");
+
+        priorityBudgetRow.getChildren().addAll(priorityGroup, budgetGroup);
+
+        formContainer.getChildren().addAll(nameGroup, descGroup, datesRow, projectDetailsRow, priorityBudgetRow);
+
+        // Modern buttons
         HBox buttonContainer = new HBox();
-        buttonContainer.setSpacing(15);
+        buttonContainer.setSpacing(20);
         buttonContainer.setAlignment(Pos.CENTER);
 
         Button cancelButton = new Button("Cancel");
-        cancelButton.setStyle("-fx-background-color: transparent; -fx-border-color: #d1d5db; " +
-                "-fx-border-radius: 10; -fx-text-fill: #6b7280; -fx-font-size: 14px; " +
-                "-fx-padding: 12 24 12 24; -fx-cursor: hand;");
+        cancelButton.setStyle("-fx-background-color: transparent; -fx-border-color: rgba(203, 213, 225, 0.8); " +
+                "-fx-border-radius: 15; -fx-text-fill: #64748b; -fx-font-size: 16px; -fx-font-weight: 500; " +
+                "-fx-padding: 16 32 16 32; -fx-cursor: hand;");
         cancelButton.setOnAction(e -> dialogStage.close());
 
-        Button saveButton = new Button("Create");
-        saveButton.setStyle("-fx-background-color: #4f46e5; -fx-background-radius: 10; " +
-                "-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; " +
-                "-fx-padding: 12 24 12 24; -fx-cursor: hand;");
+        Button saveButton = new Button("Create Project");
+        saveButton.setStyle("-fx-background-color: linear-gradient(135deg, #4C6BB6, #6366f1); -fx-background-radius: 15; " +
+                "-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: 600; " +
+                "-fx-padding: 16 32 16 32; -fx-cursor: hand; " +
+                "-fx-effect: dropshadow(gaussian, rgba(76, 107, 182, 0.4), 15, 0, 0, 5);");
 
         // Enable/disable save button
         saveButton.setDisable(true);
         projectNameField.textProperty().addListener((obs, old, newVal) -> {
-            saveButton.setDisable(newVal.trim().isEmpty());
+            boolean isEmpty = newVal.trim().isEmpty();
+            saveButton.setDisable(isEmpty);
+            if (isEmpty) {
+                saveButton.setStyle("-fx-background-color: rgba(203, 213, 225, 0.5); -fx-background-radius: 15; " +
+                        "-fx-text-fill: rgba(100, 116, 139, 0.7); -fx-font-size: 16px; -fx-font-weight: 600; " +
+                        "-fx-padding: 16 32 16 32;");
+            } else {
+                saveButton.setStyle("-fx-background-color: linear-gradient(135deg, #4C6BB6, #6366f1); -fx-background-radius: 15; " +
+                        "-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: 600; " +
+                        "-fx-padding: 16 32 16 32; -fx-cursor: hand; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(76, 107, 182, 0.4), 15, 0, 0, 5);");
+            }
         });
 
         saveButton.setOnAction(e -> {
@@ -170,9 +217,9 @@ public class HelloController {
                     descriptionField.getText().trim(),
                     startDatePicker.getValue(),
                     dueDatePicker.getValue(),
-                    studentsField.getText().trim(),
-                    selectedMembers, // Pass selected members instead of duration
-                    qaField.getText().trim()
+                    categoryField.getValue() != null ? categoryField.getValue() : "General", // Category instead of students
+                    selectedMembers,
+                    priorityField.getValue() + " | $" + (budgetField.getText().trim().isEmpty() ? "0" : budgetField.getText().trim()) // Priority and budget instead of Q&A
             );
             addNewCard(project);
             dialogStage.close();
@@ -182,13 +229,13 @@ public class HelloController {
 
         mainContainer.getChildren().addAll(header, formContainer, buttonContainer);
 
-        // Create scene with padding
+        // Create scene with modern backdrop
         VBox sceneContainer = new VBox();
         sceneContainer.setAlignment(Pos.CENTER);
-        sceneContainer.setStyle("-fx-background-color: rgba(0,0,0,0.3);");
+        sceneContainer.setStyle("-fx-background-color: rgba(30, 41, 59, 0.4);");
         sceneContainer.getChildren().add(mainContainer);
 
-        Scene scene = new Scene(sceneContainer, 550, 750);
+        Scene scene = new Scene(sceneContainer, 650, 850);
         scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
 
         dialogStage.initStyle(StageStyle.TRANSPARENT);
@@ -196,34 +243,56 @@ public class HelloController {
         dialogStage.showAndWait();
     }
 
+    private ComboBox<String> createCategoryComboBox() {
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.setItems(FXCollections.observableArrayList(projectCategories));
+        comboBox.setPromptText("Select project category");
+        comboBox.setValue("Web Development"); // Default selection
+        comboBox.setStyle("-fx-background-color: rgba(248, 250, 252, 0.8); -fx-border-color: rgba(226, 232, 240, 0.8); " +
+                "-fx-border-radius: 15; -fx-background-radius: 15; " +
+                "-fx-padding: 16 20 16 20; -fx-font-size: 15px; -fx-font-weight: 500;");
+        return comboBox;
+    }
+
+    private ComboBox<String> createPriorityComboBox() {
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.setItems(FXCollections.observableArrayList(priorityLevels));
+        comboBox.setPromptText("Select priority");
+        comboBox.setValue("Medium"); // Default selection
+        comboBox.setStyle("-fx-background-color: rgba(248, 250, 252, 0.8); -fx-border-color: rgba(226, 232, 240, 0.8); " +
+                "-fx-border-radius: 15; -fx-background-radius: 15; " +
+                "-fx-padding: 16 20 16 20; -fx-font-size: 15px; -fx-font-weight: 500;");
+        return comboBox;
+    }
+
     private VBox createMemberSearchGroup() {
         VBox group = new VBox();
-        group.setSpacing(8);
+        group.setSpacing(12);
 
-        Label label = new Label("Add Members");
-        label.setStyle("-fx-font-size: 14px; -fx-font-weight: 600; -fx-text-fill: #374151;");
+        Label label = new Label("Team Members");
+        label.setStyle("-fx-font-size: 16px; -fx-font-weight: 600; -fx-text-fill: #1e293b;");
 
         VBox memberContainer = new VBox();
-        memberContainer.setSpacing(10);
+        memberContainer.setSpacing(12);
 
-        // Search TextField
-        TextField searchField = createStyledTextField("Enter email to search...");
-        searchField.setStyle(searchField.getStyle() + "; -fx-prompt-text-fill: #9ca3af;");
+        // Search TextField with modern styling
+        TextField searchField = createModernTextField("Search team members...");
+        searchField.setStyle(searchField.getStyle() + "; -fx-prompt-text-fill: rgba(100, 116, 139, 0.7);");
 
         // Suggestions ListView (initially hidden)
         ListView<User> suggestionsListView = new ListView<>();
         suggestionsListView.setPrefHeight(120);
         suggestionsListView.setVisible(false);
         suggestionsListView.setManaged(false);
-        suggestionsListView.setStyle("-fx-background-color: white; -fx-border-color: #e5e7eb; " +
-                "-fx-border-radius: 0 0 10 10; -fx-background-radius: 0 0 10 10;");
+        suggestionsListView.setStyle("-fx-background-color: white; -fx-border-color: rgba(226, 232, 240, 0.8); " +
+                "-fx-border-radius: 0 0 15 15; -fx-background-radius: 0 0 15 15;");
 
         // Selected members container
         FlowPane selectedMembersPane = new FlowPane();
-        selectedMembersPane.setHgap(8);
-        selectedMembersPane.setVgap(8);
+        selectedMembersPane.setHgap(10);
+        selectedMembersPane.setVgap(10);
 
-        // Custom cell factory for suggestions
+        // Custom cell factory for suggestions with modern styling
         suggestionsListView.setCellFactory(listView -> new ListCell<User>() {
             @Override
             protected void updateItem(User user, boolean empty) {
@@ -233,24 +302,30 @@ public class HelloController {
                     setGraphic(null);
                 } else {
                     HBox container = new HBox();
-                    container.setSpacing(10);
+                    container.setSpacing(12);
                     container.setAlignment(Pos.CENTER_LEFT);
-                    container.setPadding(new Insets(8));
+                    container.setPadding(new Insets(10));
 
-                    // Avatar
-                    Label avatar = new Label("👤");
-                    avatar.setStyle("-fx-font-size: 16px; -fx-background-color: #e8f2ff; " +
-                            "-fx-background-radius: 15; -fx-padding: 5; -fx-min-width: 30; -fx-alignment: center;");
+                    // Modern avatar
+                    VBox avatar = new VBox();
+                    avatar.setAlignment(Pos.CENTER);
+                    avatar.setPrefSize(35, 35);
+                    avatar.setStyle("-fx-background-color: linear-gradient(135deg, #4C6BB6, #6366f1); " +
+                            "-fx-background-radius: 17.5; -fx-effect: dropshadow(gaussian, rgba(76, 107, 182, 0.3), 5, 0, 0, 2);");
+
+                    Label avatarLabel = new Label(user.getName().substring(0, 1).toUpperCase());
+                    avatarLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;");
+                    avatar.getChildren().add(avatarLabel);
 
                     // User info
                     VBox userInfo = new VBox();
                     userInfo.setSpacing(2);
 
                     Label nameLabel = new Label(user.getName());
-                    nameLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: 600; -fx-text-fill: #1f2937;");
+                    nameLabel.setStyle("-fx-font-size: 15px; -fx-font-weight: 600; -fx-text-fill: #1e293b;");
 
                     Label emailLabel = new Label(user.getEmail());
-                    emailLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #6b7280;");
+                    emailLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #64748b;");
 
                     userInfo.getChildren().addAll(nameLabel, emailLabel);
                     container.getChildren().addAll(avatar, userInfo);
@@ -318,19 +393,20 @@ public class HelloController {
 
     private void addSelectedMember(User user, FlowPane selectedMembersPane) {
         HBox memberTag = new HBox();
-        memberTag.setSpacing(8);
+        memberTag.setSpacing(10);
         memberTag.setAlignment(Pos.CENTER);
-        memberTag.setPadding(new Insets(6, 10, 6, 10));
-        memberTag.setStyle("-fx-background-color: #e8f2ff; -fx-background-radius: 20; -fx-border-color: #3b82f6; -fx-border-radius: 20;");
+        memberTag.setPadding(new Insets(8, 15, 8, 15));
+        memberTag.setStyle("-fx-background-color: rgba(76, 107, 182, 0.1); -fx-background-radius: 25; " +
+                "-fx-border-color: rgba(76, 107, 182, 0.3); -fx-border-radius: 25; -fx-border-width: 1;");
         memberTag.setUserData(user); // Store user data for later retrieval
 
         Label nameLabel = new Label(user.getName());
-        nameLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #1e40af; -fx-font-weight: 600;");
+        nameLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #4C6BB6; -fx-font-weight: 600;");
 
         Button removeButton = new Button("×");
         removeButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent; " +
-                "-fx-text-fill: #6b7280; -fx-font-size: 14px; -fx-padding: 0; " +
-                "-fx-min-width: 16; -fx-min-height: 16; -fx-cursor: hand;");
+                "-fx-text-fill: #64748b; -fx-font-size: 16px; -fx-padding: 0; " +
+                "-fx-min-width: 18; -fx-min-height: 18; -fx-cursor: hand;");
         removeButton.setOnAction(e -> selectedMembersPane.getChildren().remove(memberTag));
 
         memberTag.getChildren().addAll(nameLabel, removeButton);
@@ -351,12 +427,12 @@ public class HelloController {
         return selectedUsers;
     }
 
-    private VBox createFieldGroup(String labelText, javafx.scene.Node field) {
+    private VBox createModernFieldGroup(String labelText, javafx.scene.Node field) {
         VBox group = new VBox();
-        group.setSpacing(8);
+        group.setSpacing(12);
 
         Label label = new Label(labelText);
-        label.setStyle("-fx-font-size: 14px; -fx-font-weight: 600; -fx-text-fill: #374151;");
+        label.setStyle("-fx-font-size: 16px; -fx-font-weight: 600; -fx-text-fill: #1e293b;");
 
         VBox fieldContainer = new VBox();
         fieldContainer.getChildren().add(field);
@@ -365,30 +441,71 @@ public class HelloController {
         return group;
     }
 
-    private TextField createStyledTextField(String promptText) {
+    private TextField createModernTextField(String promptText) {
         TextField field = new TextField();
         field.setPromptText(promptText);
-        field.setStyle("-fx-background-color: #f9fafb; -fx-border-color: #e5e7eb; " +
-                "-fx-border-radius: 10; -fx-background-radius: 10; " +
-                "-fx-padding: 12 16 12 16; -fx-font-size: 14px;");
+        field.setStyle("-fx-background-color: rgba(248, 250, 252, 0.8); -fx-border-color: rgba(226, 232, 240, 0.8); " +
+                "-fx-border-radius: 15; -fx-background-radius: 15; " +
+                "-fx-padding: 16 20 16 20; -fx-font-size: 15px; -fx-font-weight: 500; " +
+                "-fx-prompt-text-fill: rgba(100, 116, 139, 0.7);");
+
+        // Add focus effects
+        field.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                field.setStyle(field.getStyle() + "; -fx-border-color: #4C6BB6; -fx-border-width: 2;");
+            } else {
+                field.setStyle("-fx-background-color: rgba(248, 250, 252, 0.8); -fx-border-color: rgba(226, 232, 240, 0.8); " +
+                        "-fx-border-radius: 15; -fx-background-radius: 15; " +
+                        "-fx-padding: 16 20 16 20; -fx-font-size: 15px; -fx-font-weight: 500; " +
+                        "-fx-prompt-text-fill: rgba(100, 116, 139, 0.7);");
+            }
+        });
+
         return field;
     }
 
-    private TextArea createStyledTextArea(String promptText) {
+    private TextArea createModernTextArea(String promptText) {
         TextArea area = new TextArea();
         area.setPromptText(promptText);
         area.setPrefRowCount(3);
-        area.setStyle("-fx-background-color: #f9fafb; -fx-border-color: #e5e7eb; " +
-                "-fx-border-radius: 10; -fx-background-radius: 10; " +
-                "-fx-padding: 12 16 12 16; -fx-font-size: 14px;");
+        area.setWrapText(true);
+        area.setStyle("-fx-background-color: rgba(248, 250, 252, 0.8); -fx-border-color: rgba(226, 232, 240, 0.8); " +
+                "-fx-border-radius: 15; -fx-background-radius: 15; " +
+                "-fx-padding: 16 20 16 20; -fx-font-size: 15px; -fx-font-weight: 500; " +
+                "-fx-prompt-text-fill: rgba(100, 116, 139, 0.7);");
+
+        // Add focus effects
+        area.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                area.setStyle(area.getStyle() + "; -fx-border-color: #4C6BB6; -fx-border-width: 2;");
+            } else {
+                area.setStyle("-fx-background-color: rgba(248, 250, 252, 0.8); -fx-border-color: rgba(226, 232, 240, 0.8); " +
+                        "-fx-border-radius: 15; -fx-background-radius: 15; " +
+                        "-fx-padding: 16 20 16 20; -fx-font-size: 15px; -fx-font-weight: 500; " +
+                        "-fx-prompt-text-fill: rgba(100, 116, 139, 0.7);");
+            }
+        });
+
         return area;
     }
 
-    private DatePicker createStyledDatePicker() {
+    private DatePicker createModernDatePicker() {
         DatePicker picker = new DatePicker();
-        picker.setStyle("-fx-background-color: #f9fafb; -fx-border-color: #e5e7eb; " +
-                "-fx-border-radius: 10; -fx-background-radius: 10; " +
-                "-fx-padding: 12 16 12 16; -fx-font-size: 14px;");
+        picker.setStyle("-fx-background-color: rgba(248, 250, 252, 0.8); -fx-border-color: rgba(226, 232, 240, 0.8); " +
+                "-fx-border-radius: 15; -fx-background-radius: 15; " +
+                "-fx-padding: 16 20 16 20; -fx-font-size: 15px; -fx-font-weight: 500;");
+
+        // Add focus effects
+        picker.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                picker.setStyle(picker.getStyle() + "; -fx-border-color: #4C6BB6; -fx-border-width: 2;");
+            } else {
+                picker.setStyle("-fx-background-color: rgba(248, 250, 252, 0.8); -fx-border-color: rgba(226, 232, 240, 0.8); " +
+                        "-fx-border-radius: 15; -fx-background-radius: 15; " +
+                        "-fx-padding: 16 20 16 20; -fx-font-size: 15px; -fx-font-weight: 500;");
+            }
+        });
+
         return picker;
     }
 
@@ -444,14 +561,14 @@ public class HelloController {
 
         titleBox.getChildren().addAll(titleLabel, categoryLabel);
 
-        // Info section
+        // Info section with updated information
         VBox infoBox = new VBox();
         infoBox.setSpacing(8.0);
 
-        // Date and students info
-        HBox dateStudentsBox = new HBox();
-        dateStudentsBox.setAlignment(Pos.CENTER_LEFT);
-        dateStudentsBox.setSpacing(5.0);
+        // Date and category info
+        HBox dateCategoryBox = new HBox();
+        dateCategoryBox.setAlignment(Pos.CENTER_LEFT);
+        dateCategoryBox.setSpacing(5.0);
 
         Label dateIcon = new Label("📅");
         Label dateLabel = new Label(project.getDueDate().format(DateTimeFormatter.ofPattern("MMM dd, yyyy")));
@@ -460,31 +577,31 @@ public class HelloController {
         Region spacer1 = new Region();
         HBox.setHgrow(spacer1, Priority.ALWAYS);
 
-        Label studentsIcon = new Label("👥");
-        Label studentsLabel = new Label("Students: " + project.getStudents());
-        studentsLabel.getStyleClass().add("card-info");
+        Label categoryIcon = new Label("📂");
+        Label categoryDisplayLabel = new Label("Type: " + project.getStudents()); // Using students field for category
+        categoryDisplayLabel.getStyleClass().add("card-info");
 
-        dateStudentsBox.getChildren().addAll(dateIcon, dateLabel, spacer1, studentsIcon, studentsLabel);
+        dateCategoryBox.getChildren().addAll(dateIcon, dateLabel, spacer1, categoryIcon, categoryDisplayLabel);
 
-        // Members and Q&A info
-        HBox membersQABox = new HBox();
-        membersQABox.setAlignment(Pos.CENTER_LEFT);
-        membersQABox.setSpacing(5.0);
+        // Members and Priority/Budget info
+        HBox membersPriorityBox = new HBox();
+        membersPriorityBox.setAlignment(Pos.CENTER_LEFT);
+        membersPriorityBox.setSpacing(5.0);
 
         Label membersIcon = new Label("👨‍👩‍👧‍👦");
-        Label membersLabel = new Label("Members: " + project.getMembers().size());
+        Label membersLabel = new Label("Team: " + project.getMembers().size());
         membersLabel.getStyleClass().add("card-info");
 
         Region spacer2 = new Region();
         HBox.setHgrow(spacer2, Priority.ALWAYS);
 
-        Label qaIcon = new Label("❓");
-        Label qaLabel = new Label("Q&A: " + project.getQaCount());
-        qaLabel.getStyleClass().add("card-info");
+        Label priorityIcon = new Label("⚡");
+        Label priorityLabel = new Label(project.getQaCount()); // Using qaCount field for priority/budget
+        priorityLabel.getStyleClass().add("card-info");
 
-        membersQABox.getChildren().addAll(membersIcon, membersLabel, spacer2, qaIcon, qaLabel);
+        membersPriorityBox.getChildren().addAll(membersIcon, membersLabel, spacer2, priorityIcon, priorityLabel);
 
-        infoBox.getChildren().addAll(dateStudentsBox, membersQABox);
+        infoBox.getChildren().addAll(dateCategoryBox, membersPriorityBox);
 
         card.getChildren().addAll(menuBox, titleBox, infoBox);
 
@@ -496,7 +613,7 @@ public class HelloController {
             Stage stage = (Stage) cardsGrid.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("project-detail.fxml"));
             Scene scene = new Scene(loader.load(), 1400, 900);
-            scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/css/project-detail.css").toExternalForm());
 
             // Pass project data to detail controller
             ProjectDetailController controller = loader.getController();
