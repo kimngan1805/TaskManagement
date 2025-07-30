@@ -1,14 +1,238 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.taskproject.EditorView"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.taskproject.controller.EditorController">
+    <left>
+        <!-- Sidebar -->
+        <VBox prefHeight="600.0" prefWidth="260.0" styleClass="modern-sidebar">
+            <!-- Logo Section with Gradient -->
+            <VBox alignment="CENTER" prefHeight="100.0" styleClass="modern-logo-section">
+                <VBox alignment="CENTER" styleClass="logo-container">
+                    <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@image/logo.png" />
+                        </image>
+                    </ImageView>
+                    <Label styleClass="logo-text" text="EduPlatform" />
+                </VBox>
+            </VBox>
 
-</AnchorPane>
+            <!-- Navigation Menu with Modern Styling -->
+            <VBox prefHeight="470.0" prefWidth="260.0" spacing="8.0" styleClass="modern-nav-menu">
+                <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button" text=" Home" onAction="#goToHome">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0">
+                            <image>
+                                <Image url="@image/home.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button" text=" Project">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0">
+                            <image>
+                                <Image url="@image/project.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button" text=" Note">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0">
+                            <image>
+                                <Image url="@image/note.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button,nav-active" text=" Editor">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0">
+                            <image>
+                                <Image url="@image/note.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button" text=" My Rooms" />
+                <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button" text=" Activity" />
+                <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button" text=" Analysis" />
+                <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button" text=" Contacts" />
+
+                <Region VBox.vgrow="ALWAYS" />
+
+                <VBox spacing="8.0" styleClass="bottom-nav-section">
+                    <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button" text=" Settings" />
+                    <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button-logout" text=" Logout" />
+                </VBox>
+            </VBox>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="modern-scroll-pane">
+            <!-- Main Content with Modern Layout -->
+            <VBox styleClass="modern-main-content">
+
+                <!-- Modern Header with Glass Effect -->
+                <HBox alignment="CENTER_RIGHT" prefHeight="80.0" spacing="20.0" styleClass="modern-header">
+                    <HBox alignment="CENTER_LEFT" spacing="15.0" HBox.hgrow="ALWAYS">
+                        <VBox spacing="2.0">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label styleClass="breadcrumb-text">
+                                    <graphic>
+                                        <ImageView fitHeight="14.0" fitWidth="14.0">
+                                            <image>
+                                                <Image url="@image/home.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Label>
+                                <Label styleClass="breadcrumb-separator" text=">" />
+                                <Label styleClass="breadcrumb-current" text="Document Editor" />
+                            </HBox>
+                        </VBox>
+                    </HBox>
+
+                    <!-- Modern Header Actions -->
+                    <HBox alignment="CENTER" spacing="12.0">
+                        <Button mnemonicParsing="false" styleClass="modern-header-button">
+                            <graphic>
+                                <ImageView fitHeight="14.0" fitWidth="14.0">
+                                    <image>
+                                        <Image url="@image/brightness.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" styleClass="modern-header-button">
+                            <graphic>
+                                <ImageView fitHeight="14.0" fitWidth="14.0">
+                                    <image>
+                                        <Image url="@image/email.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" styleClass="modern-header-button-notification">
+                            <graphic>
+                                <ImageView fitHeight="14.0" fitWidth="14.0">
+                                    <image>
+                                        <Image url="@image/bell.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+
+                        <!-- Modern User Profile -->
+                        <HBox alignment="CENTER" spacing="12.0" styleClass="modern-user-profile">
+                            <VBox alignment="CENTER" prefHeight="45.0" prefWidth="45.0" styleClass="modern-user-avatar">
+                                <ImageView fitHeight="24.0" fitWidth="24.0">
+                                    <image>
+                                        <Image url="@image/user.png" />
+                                    </image>
+                                </ImageView>
+                            </VBox>
+                            <VBox alignment="CENTER_LEFT" spacing="2.0">
+                                <Label styleClass="user-name-modern" text="Osama.A" />
+                                <Label styleClass="user-role-modern" text="Teacher" />
+                            </VBox>
+                        </HBox>
+                    </HBox>
+                </HBox>
+
+                <!-- Content Area with Editor -->
+                <VBox spacing="25.0" styleClass="modern-content-area">
+
+                    <!-- Document Header -->
+                    <VBox spacing="15.0" styleClass="editor-header-card">
+                        <HBox alignment="CENTER_LEFT" spacing="20.0">
+                            <!-- Document Icon -->
+                            <VBox alignment="CENTER" prefHeight="60.0" prefWidth="60.0" styleClass="modern-doc-icon">
+                                <Label styleClass="doc-icon-text" text="📄" />
+                            </VBox>
+
+                            <!-- Document Info -->
+                            <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                <TextField fx:id="documentTitle" styleClass="doc-title-field" text="Untitled Document" />
+                                <Label fx:id="documentDescription" styleClass="doc-description"
+                                       text="Create and edit rich text documents with various content blocks" />
+                            </VBox>
+
+                            <!-- Action Buttons -->
+                            <HBox spacing="12.0">
+                                <Button styleClass="editor-action-btn" text="💾 Save" onAction="#saveDocument" />
+                                <Button styleClass="editor-action-btn-secondary" text="📤 Export" onAction="#exportDocument" />
+                            </HBox>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Editor Container -->
+                    <VBox spacing="0" styleClass="editor-container">
+
+                        <!-- Editor Content Area -->
+                        <ScrollPane fx:id="editorScrollPane" styleClass="editor-scroll" prefHeight="600.0">
+                            <VBox fx:id="editorContent" spacing="3.0" styleClass="editor-content">
+
+                                <!-- Initial Empty Block with Plus Button -->
+                                <HBox fx:id="initialBlock" spacing="8.0" styleClass="editor-block" alignment="CENTER_LEFT">
+                                    <Button fx:id="addBlockBtn" styleClass="add-block-btn" text="+" onAction="#showBlockMenu" />
+                                    <Label styleClass="empty-block-hint" text="Click + to add content or start typing..." />
+                                </HBox>
+
+                            </VBox>
+                        </ScrollPane>
+
+                        <!-- Block Type Menu (Hidden by default) -->
+                        <VBox fx:id="blockTypeMenu" styleClass="block-type-menu" visible="false" managed="false">
+                            <Label styleClass="menu-title" text="Add Block" />
+
+                            <!-- Text Blocks -->
+                            <VBox spacing="2.0" styleClass="menu-section">
+                                <Label styleClass="menu-section-title" text="Basic Blocks" />
+                                <Button styleClass="menu-item" text="📝 Text" onAction="#addTextBlock" />
+                                <Button styleClass="menu-item" text="📖 Heading 1" onAction="#addHeading1" />
+                                <Button styleClass="menu-item" text="📖 Heading 2" onAction="#addHeading2" />
+                                <Button styleClass="menu-item" text="📖 Heading 3" onAction="#addHeading3" />
+                                <Button styleClass="menu-item" text="• Bulleted List" onAction="#addBulletList" />
+                                <Button styleClass="menu-item" text="1. Numbered List" onAction="#addNumberedList" />
+                                <Button styleClass="menu-item" text="☐ To-do List" onAction="#addTodoList" />
+                                <Button styleClass="menu-item" text="▼ Toggle List" onAction="#addToggleList" />
+                            </VBox>
+
+                            <!-- Advanced Blocks -->
+                            <VBox spacing="2.0" styleClass="menu-section">
+                                <Label styleClass="menu-section-title" text="Advanced Blocks" />
+                                <Button styleClass="menu-item" text="📄 Page" onAction="#addPageBlock" />
+                                <Button styleClass="menu-item" text="💡 Callout" onAction="#addCalloutBlock" />
+                                <Button styleClass="menu-item" text="💬 Quote" onAction="#addQuoteBlock" />
+                                <Button styleClass="menu-item" text="🔗 Link to Page" onAction="#addLinkBlock" />
+                            </VBox>
+
+                            <!-- Media Blocks -->
+                            <VBox spacing="2.0" styleClass="menu-section">
+                                <Label styleClass="menu-section-title" text="Media" />
+                                <Button styleClass="menu-item" text="🖼️ Image" onAction="#addImageBlock" />
+                                <Button styleClass="menu-item" text="🎥 Video" onAction="#addVideoBlock" />
+                            </VBox>
+
+                            <!-- Database Blocks -->
+                            <VBox spacing="2.0" styleClass="menu-section">
+                                <Label styleClass="menu-section-title" text="Database" />
+                                <Button styleClass="menu-item" text="📊 Table" onAction="#addTableBlock" />
+                                <Button styleClass="menu-item" text="📋 Board View" onAction="#addBoardBlock" />
+                                <Button styleClass="menu-item" text="📅 Calendar View" onAction="#addCalendarBlock" />
+                            </VBox>
+                        </VBox>
+
+                    </VBox>
+
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
