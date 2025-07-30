@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
@@ -13,148 +14,197 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.taskproject.ProjectDetailController">
+<BorderPane stylesheets="@../../../css/project-detail.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.taskproject.ProjectDetailController">
     <left>
-        <!-- Sidebar -->
-        <VBox prefHeight="600.0" prefWidth="246.0" styleClass="sidebar" stylesheets="@../../../css/project-detail.css">
-            <!-- Logo Section -->
-            <VBox alignment="CENTER" prefHeight="120.0" styleClass="logo-section">
-                <ImageView fitHeight="83.0" fitWidth="122.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@image/logo.png" />
-                    </image>
-                </ImageView>
+        <!-- Modern Sidebar -->
+        <VBox prefHeight="600.0" prefWidth="260.0" styleClass="modern-sidebar" stylesheets="@../../../css/project-detail.css">
+            <!-- Logo Section with Gradient -->
+            <VBox alignment="CENTER" prefHeight="100.0" styleClass="modern-logo-section">
+                <VBox alignment="CENTER" styleClass="logo-container">
+                    <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@image/logo.png" />
+                        </image>
+                    </ImageView>
+                    <Label styleClass="logo-text" text="EduPlatform" />
+                </VBox>
             </VBox>
 
-            <!-- Navigation Menu -->
-            <VBox prefHeight="470.0" prefWidth="225.0" spacing="5.0" styleClass="nav-menu">
-                <Button mnemonicParsing="false" prefHeight="46.0" prefWidth="224.0" styleClass="nav-button" text="🏠 Home" onAction="#goBackHome" />
-                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="209.0" styleClass="nav-button" text="🎮 Game Studio" />
-                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="217.0" styleClass="nav-button" text="📁 My Classes" />
-                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="🏠 My Rooms" />
-                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="📊 Activity" />
-                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="📈 Analysis" />
-                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="👥 Contacts" />
+            <!-- Navigation Menu with Modern Styling -->
+            <VBox prefHeight="470.0" prefWidth="260.0" spacing="8.0" styleClass="modern-nav-menu">
+                <Button mnemonicParsing="false" onAction="#goBackHome" prefWidth="240.0" styleClass="modern-nav-button" text="🏠 Home" />
+                <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button" text="🎮 Game Studio" />
+                <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button" text="📁 My Classes" />
+                <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button" text="🏠 My Rooms" />
+                <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button" text="📊 Activity" />
+                <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button" text="📈 Analysis" />
+                <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button" text="👥 Contacts" />
 
                 <Region VBox.vgrow="ALWAYS" />
 
-                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="⚙️ Settings" />
-                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="🚪 Logout" />
+                <VBox spacing="8.0" styleClass="bottom-nav-section">
+                    <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button" text="⚙️ Settings" />
+                    <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button-logout" text="🚪 Logout" />
+                </VBox>
             </VBox>
         </VBox>
     </left>
 
     <center>
-        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
-            <!-- Main Content -->
-            <VBox styleClass="main-content" stylesheets="@../../../css/style.css">
+        <ScrollPane fitToWidth="true" styleClass="modern-scroll-pane">
+            <!-- Main Content with Modern Layout -->
+            <VBox styleClass="modern-main-content">
 
-                <!-- Header -->
-                <HBox alignment="CENTER_RIGHT" prefHeight="74.0" spacing="15.0" styleClass="header">
-                    <HBox alignment="CENTER_LEFT" spacing="10.0" HBox.hgrow="ALWAYS">
-                        <Button styleClass="back-button" text="← Back" onAction="#goBackHome" />
-                        <Label styleClass="breadcrumb" text="Projects" />
-                        <Label styleClass="breadcrumb" text=">" />
-                        <Label fx:id="projectBreadcrumb" styleClass="breadcrumb" text="Project Details" />
+                <!-- Modern Header with Glass Effect -->
+                <HBox alignment="CENTER_RIGHT" prefHeight="80.0" spacing="20.0" styleClass="modern-header">
+                    <HBox alignment="CENTER_LEFT" spacing="15.0" stylesheets="@../../../css/project-detail.css" HBox.hgrow="ALWAYS">
+                        <Button onAction="#goBackHome" styleClass="modern-back-button" text="← Back" />
+                        <VBox spacing="2.0">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label styleClass="breadcrumb-text" text="Projects" />
+                                <Label styleClass="breadcrumb-separator" text="/" />
+                                <Label fx:id="projectBreadcrumb" styleClass="breadcrumb-current" text="Project Details" />
+                            </HBox>
+                        </VBox>
                     </HBox>
 
-                    <Button mnemonicParsing="false" styleClass="header-button">
-                        <graphic>
-                            <Label text="🌙" />
-                        </graphic>
-                    </Button>
-                    <Button mnemonicParsing="false" styleClass="header-button">
-                        <graphic>
-                            <Label text="✉️" />
-                        </graphic>
-                    </Button>
-                    <Button mnemonicParsing="false" styleClass="header-button">
-                        <graphic>
-                            <Label text="🔔" />
-                        </graphic>
-                    </Button>
+                    <!-- Modern Header Actions -->
+                    <HBox alignment="CENTER" spacing="12.0">
+                        <Button mnemonicParsing="false" styleClass="modern-header-button">
+                            <graphic>
+                                <Label styleClass="header-icon" text="🌙" />
+                            </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" styleClass="modern-header-button">
+                            <graphic>
+                                <Label styleClass="header-icon" text="✉️" />
+                            </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" styleClass="modern-header-button-notification">
+                            <graphic>
+                                <Label styleClass="header-icon" text="🔔" />
+                            </graphic>
+                        </Button>
 
-                    <HBox alignment="CENTER" spacing="10.0" styleClass="user-profile">
-                        <HBox alignment="CENTER" prefHeight="35.0" prefWidth="35.0" styleClass="user-avatar">
-                            <Label styleClass="user-initial" text="O" />
+                        <!-- Modern User Profile -->
+                        <HBox alignment="CENTER" spacing="12.0" styleClass="modern-user-profile">
+                            <VBox alignment="CENTER" prefHeight="45.0" prefWidth="45.0" styleClass="modern-user-avatar">
+                                <Label styleClass="user-initial-modern" text="O" />
+                            </VBox>
+                            <VBox alignment="CENTER_LEFT" spacing="2.0">
+                                <Label styleClass="user-name-modern" text="Osama.A" />
+                                <Label styleClass="user-role-modern" text="Teacher" />
+                            </VBox>
                         </HBox>
-                        <VBox alignment="CENTER_LEFT">
-                            <Label styleClass="user-name" text="Osama.A" />
-                            <Label styleClass="user-role" text="Teacher" />
-                        </VBox>
                     </HBox>
                 </HBox>
 
-                <Region prefHeight="20.0" />
+                <!-- Content Area with Modern Cards -->
+                <VBox spacing="25.0" styleClass="modern-content-area">
 
-                <!-- Project Detail Content -->
-                <VBox spacing="30.0" styleClass="content-section">
-
-                    <!-- Project Header Card -->
-                    <VBox spacing="20.0" styleClass="project-header-card">
-                        <HBox alignment="CENTER_LEFT" spacing="20.0">
-                            <VBox alignment="CENTER" prefHeight="80.0" prefWidth="80.0" styleClass="project-icon-large">
-                                <Label styleClass="project-icon-text-large" text="📚" />
+                    <!-- Modern Project Header Card -->
+                    <VBox spacing="25.0" styleClass="modern-project-card" stylesheets="@../../../css/project-detail.css">
+                        <!-- Project Info Row -->
+                        <HBox alignment="CENTER_LEFT" spacing="25.0">
+                            <!-- Project Icon with Gradient -->
+                            <VBox alignment="CENTER" prefHeight="90.0" prefWidth="90.0" styleClass="modern-project-icon">
+                                <Label styleClass="project-icon-emoji" text="📚" />
                             </VBox>
-                            <VBox spacing="10.0" HBox.hgrow="ALWAYS">
-                                <Label fx:id="projectTitle" styleClass="project-title-large" text="Project Title" />
-                                <Label fx:id="projectCategory" styleClass="project-subtitle" text="Category" />
-                                <HBox spacing="20.0" styleClass="project-meta-row">
-                                    <HBox spacing="8.0" alignment="CENTER_LEFT">
-                                        <Label text="📅" styleClass="meta-icon" />
-                                        <Label text="Start:" styleClass="meta-label" />
-                                        <Label fx:id="projectStartDate" styleClass="meta-value" text="Mar 15, 2024" />
+
+                            <!-- Project Details -->
+                            <VBox spacing="12.0" HBox.hgrow="ALWAYS">
+                                <Label fx:id="projectTitle" styleClass="modern-project-title" text="Project Title" />
+                                <Label fx:id="projectCategory" styleClass="modern-project-subtitle" text="Category" />
+
+                                <!-- Modern Meta Information -->
+                                <HBox spacing="25.0" styleClass="modern-meta-row">
+                                    <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="meta-item">
+                                        <VBox alignment="CENTER" styleClass="meta-icon-container">
+                                            <Label styleClass="meta-icon-modern" text="📅" />
+                                        </VBox>
+                                        <VBox spacing="2.0">
+                                            <Label styleClass="meta-label-modern" text="Start Date" />
+                                            <Label fx:id="projectStartDate" styleClass="meta-value-modern" text="Mar 15, 2024" />
+                                        </VBox>
                                     </HBox>
-                                    <HBox spacing="8.0" alignment="CENTER_LEFT">
-                                        <Label text="🎯" styleClass="meta-icon" />
-                                        <Label text="Due:" styleClass="meta-label" />
-                                        <Label fx:id="projectDueDate" styleClass="meta-value" text="Mar 30, 2024" />
+
+                                    <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="meta-item">
+                                        <VBox alignment="CENTER" styleClass="meta-icon-container">
+                                            <Label styleClass="meta-icon-modern" text="🎯" />
+                                        </VBox>
+                                        <VBox spacing="2.0">
+                                            <Label styleClass="meta-label-modern" text="Due Date" />
+                                            <Label fx:id="projectDueDate" styleClass="meta-value-modern" text="Mar 30, 2024" />
+                                        </VBox>
                                     </HBox>
-                                    <HBox spacing="8.0" alignment="CENTER_LEFT">
-                                        <Label text="👥" styleClass="meta-icon" />
-                                        <Label fx:id="projectStudents" styleClass="meta-value" text="8 Students" />
+
+                                    <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="meta-item">
+                                        <VBox alignment="CENTER" styleClass="meta-icon-container">
+                                            <Label styleClass="meta-icon-modern" text="👥" />
+                                        </VBox>
+                                        <VBox spacing="2.0">
+                                            <Label styleClass="meta-label-modern" text="Students" />
+                                            <Label fx:id="projectStudents" styleClass="meta-value-modern" text="8 Students" />
+                                        </VBox>
                                     </HBox>
-                                    <HBox spacing="8.0" alignment="CENTER_LEFT">
-                                        <Label text="⏱️" styleClass="meta-icon" />
-                                        <Label fx:id="projectDuration" styleClass="meta-value" text="45 Min" />
+
+                                    <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="meta-item">
+                                        <VBox alignment="CENTER" styleClass="meta-icon-container">
+                                            <Label styleClass="meta-icon-modern" text="⏱️" />
+                                        </VBox>
+                                        <VBox spacing="2.0">
+                                            <Label styleClass="meta-label-modern" text="Members" />
+                                            <Label fx:id="projectDuration" styleClass="meta-value-modern" text="45 Min" />
+                                        </VBox>
                                     </HBox>
                                 </HBox>
                             </VBox>
-                            <VBox spacing="10.0" alignment="CENTER_RIGHT">
-                                <Button styleClass="action-btn-primary" text="🚀 Start Project" />
-                                <Button styleClass="action-btn-secondary" text="✏️ Edit Details" />
+
+                            <!-- Modern Action Buttons -->
+                            <VBox alignment="CENTER_RIGHT" spacing="12.0">
+                                <Button styleClass="modern-primary-button" text="🚀 Start Project" />
+                                <Button styleClass="modern-secondary-button" text="✏️ Edit Details" />
                             </VBox>
                         </HBox>
 
-                        <!-- Project Description -->
-                        <VBox spacing="10.0">
-                            <Label styleClass="section-subtitle" text="📋 Project Description" />
-                            <Label fx:id="projectDescription" styleClass="description-text" text="This is the project description. It will be populated with the actual project details when a card is clicked." wrapText="true" />
+                        <!-- Project Description Section -->
+                        <VBox spacing="15.0" styleClass="description-section">
+                            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                <VBox alignment="CENTER" styleClass="section-icon-container">
+                                    <Label styleClass="section-icon-modern" text="📋" />
+                                </VBox>
+                                <Label styleClass="section-title-modern" text="Project Description" />
+                            </HBox>
+                            <Label fx:id="projectDescription" styleClass="modern-description-text" text="This is the project description. It will be populated with the actual project details when a card is clicked." wrapText="true" />
                         </VBox>
 
-                        <!-- Progress Section -->
-                        <VBox spacing="12.0">
-                            <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                <Label text="📈" styleClass="meta-icon" />
-                                <Label styleClass="section-subtitle" text="Project Progress" />
+                        <!-- Modern Progress Section -->
+                        <VBox spacing="15.0" styleClass="progress-section">
+                            <HBox alignment="CENTER_LEFT" spacing="15.0">
+                                <VBox alignment="CENTER" styleClass="section-icon-container">
+                                    <Label styleClass="section-icon-modern" text="📈" />
+                                </VBox>
+                                <Label styleClass="section-title-modern" text="Project Progress" />
                                 <Region HBox.hgrow="ALWAYS" />
-                                <Label fx:id="progressPercentage" styleClass="progress-percentage" text="85%" />
+                                <Label fx:id="progressPercentage" styleClass="modern-progress-percentage" text="85%" />
                             </HBox>
                             <ProgressBar fx:id="progressBar" prefWidth="400.0" progress="0.85" styleClass="modern-progress-bar" />
                         </VBox>
                     </VBox>
 
-                    <!-- Tasks Management Section -->
-                    <VBox spacing="20.0" styleClass="tasks-section">
+                    <!-- Modern Tasks Section -->
+                    <VBox spacing="20.0" styleClass="modern-tasks-card">
                         <HBox alignment="CENTER_LEFT" spacing="15.0">
-                            <Label text="📋" styleClass="section-icon" />
-                            <Label styleClass="section-title" text="Task Management" />
+                            <VBox alignment="CENTER" styleClass="section-icon-container">
+                                <Label styleClass="section-icon-modern" text="📋" />
+                            </VBox>
+                            <Label styleClass="section-title-modern" text="Task Management" />
                             <Region HBox.hgrow="ALWAYS" />
-                            <Button fx:id="addTaskBtn" styleClass="add-task-btn" text="+ Add Task" onAction="#showAddTaskDialog" />
+                            <Button fx:id="addTaskBtn" onAction="#showAddTaskDialog" styleClass="modern-add-task-button" text="+ Add Task" />
                         </HBox>
 
-                        <!-- Tasks Table -->
-                        <TableView fx:id="taskTable" styleClass="modern-table">
+                        <!-- Modern Table -->
+                        <TableView fx:id="taskTable" styleClass="modern-task-table" stylesheets="@../../../css/project-detail.css">
                             <columns>
                                 <TableColumn fx:id="taskNameCol" prefWidth="200.0" text="Task Name" />
                                 <TableColumn fx:id="taskDescriptionCol" prefWidth="250.0" text="Description" />
@@ -167,38 +217,48 @@
                         </TableView>
                     </VBox>
 
-                    <!-- Recent Activities -->
-                    <VBox spacing="15.0" styleClass="activities-card">
-                        <HBox alignment="CENTER_LEFT" spacing="10.0">
-                            <Label text="🔔" styleClass="section-icon" />
-                            <Label styleClass="section-title" text="Recent Activities" />
+                    <!-- Modern Activities Card -->
+                    <VBox spacing="20.0" styleClass="modern-activities-card">
+                        <HBox alignment="CENTER_LEFT" spacing="15.0">
+                            <VBox alignment="CENTER" styleClass="section-icon-container">
+                                <Label styleClass="section-icon-modern" text="🔔" />
+                            </VBox>
+                            <Label styleClass="section-title-modern" text="Recent Activities" />
                         </HBox>
-                        <VBox spacing="12.0">
-                            <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="activity-item">
-                                <VBox alignment="CENTER" prefHeight="40.0" prefWidth="40.0" styleClass="activity-icon">
-                                    <Label text="📝" />
+
+                        <VBox spacing="15.0">
+                            <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="modern-activity-item">
+                                <VBox alignment="CENTER" prefHeight="50.0" prefWidth="50.0" styleClass="modern-activity-icon">
+                                    <Label styleClass="activity-emoji" text="📝" />
                                 </VBox>
-                                <VBox spacing="3.0" HBox.hgrow="ALWAYS">
-                                    <Label styleClass="activity-title" text="Project created" />
-                                    <Label styleClass="activity-time" text="2 hours ago" />
-                                </VBox>
-                            </HBox>
-                            <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="activity-item">
-                                <VBox alignment="CENTER" prefHeight="40.0" prefWidth="40.0" styleClass="activity-icon">
-                                    <Label text="👥" />
-                                </VBox>
-                                <VBox spacing="3.0" HBox.hgrow="ALWAYS">
-                                    <Label styleClass="activity-title" text="8 students enrolled" />
-                                    <Label styleClass="activity-time" text="1 hour ago" />
+                                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                    <Label styleClass="activity-title-modern" text="Project created" />
+                                    <Label styleClass="activity-time-modern" text="2 hours ago" />
                                 </VBox>
                             </HBox>
-                            <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="activity-item">
-                                <VBox alignment="CENTER" prefHeight="40.0" prefWidth="40.0" styleClass="activity-icon">
-                                    <Label text="✅" />
+
+                            <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="modern-activity-item">
+                                <VBox alignment="CENTER" prefHeight="50.0" prefWidth="50.0" styleClass="modern-activity-icon">
+                                    <Label styleClass="activity-emoji" text="👥" />
                                 </VBox>
-                                <VBox spacing="3.0" HBox.hgrow="ALWAYS">
-                                    <Label styleClass="activity-title" text="First milestone completed" />
-                                    <Label styleClass="activity-time" text="30 minutes ago" />
+                                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                    <Label styleClass="activity-title-modern" text="8 students enrolled" />
+                                    <Label styleClass="activity-time-modern" text="1 hour ago" />
+                                </VBox>
+                            </HBox>
+
+                            <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="modern-activity-item">
+                                <VBox alignment="CENTER" prefHeight="50.0" prefWidth="50.0" styleClass="modern-activity-icon">
+                                    <Label styleClass="activity-emoji" text="✅" />
+                                </VBox>
+                                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                    <Label styleClass="activity-title-modern" text="First milestone completed" />
+                                    <Label styleClass="activity-time-modern" text="30 minutes ago" />
+                           <stylesheets>
+                              <URL value="@../../../css/signup.css" />
+                              <URL value="@../../../css/project-detail.css" />
+                              <URL value="@../../../css/project-detail.css" />
+                           </stylesheets>
                                 </VBox>
                             </HBox>
                         </VBox>
