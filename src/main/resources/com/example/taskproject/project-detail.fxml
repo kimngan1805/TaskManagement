@@ -1,210 +1,199 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.taskproject.ProjectDetailController">
-    <left>
-        <!-- Sidebar -->
-        <VBox prefHeight="600.0" prefWidth="246.0" styleClass="sidebar" stylesheets="@../../../css/project-detail.css">
-            <!-- Logo Section -->
-            <VBox alignment="CENTER" prefHeight="120.0" styleClass="logo-section">
-                <ImageView fitHeight="83.0" fitWidth="122.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@image/logo.png" />
-                    </image>
-                </ImageView>
-            </VBox>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.taskproject.ProjectDetailController">
 
-            <!-- Navigation Menu -->
-            <VBox prefHeight="470.0" prefWidth="225.0" spacing="5.0" styleClass="nav-menu">
-                <Button mnemonicParsing="false" prefHeight="46.0" prefWidth="224.0" styleClass="nav-button" text="🏠 Home" onAction="#goBackHome" />
-                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="209.0" styleClass="nav-button" text="🎮 Game Studio" />
-                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="217.0" styleClass="nav-button" text="📁 My Classes" />
-                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="🏠 My Rooms" />
-                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="📊 Activity" />
-                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="📈 Analysis" />
-                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="👥 Contacts" />
-
-                <Region VBox.vgrow="ALWAYS" />
-
-                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="⚙️ Settings" />
-                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="nav-button" text="🚪 Logout" />
-            </VBox>
-        </VBox>
-    </left>
-
-    <center>
-        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
-            <!-- Main Content -->
-            <VBox styleClass="main-content" stylesheets="@../../../css/style.css">
-
-                <!-- Header -->
-                <HBox alignment="CENTER_RIGHT" prefHeight="74.0" spacing="15.0" styleClass="header">
-                    <HBox alignment="CENTER_LEFT" spacing="10.0" HBox.hgrow="ALWAYS">
-                        <Button styleClass="back-button" text="← Back" onAction="#goBackHome" />
-                        <Label styleClass="breadcrumb" text="Projects" />
-                        <Label styleClass="breadcrumb" text=">" />
-                        <Label fx:id="projectBreadcrumb" styleClass="breadcrumb" text="Project Details" />
-                    </HBox>
-
-                    <Button mnemonicParsing="false" styleClass="header-button">
-                        <graphic>
-                            <Label text="🌙" />
-                        </graphic>
-                    </Button>
-                    <Button mnemonicParsing="false" styleClass="header-button">
-                        <graphic>
-                            <Label text="✉️" />
-                        </graphic>
-                    </Button>
-                    <Button mnemonicParsing="false" styleClass="header-button">
-                        <graphic>
-                            <Label text="🔔" />
-                        </graphic>
-                    </Button>
-
-                    <HBox alignment="CENTER" spacing="10.0" styleClass="user-profile">
-                        <HBox alignment="CENTER" prefHeight="35.0" prefWidth="35.0" styleClass="user-avatar">
-                            <Label styleClass="user-initial" text="O" />
-                        </HBox>
-                        <VBox alignment="CENTER_LEFT">
-                            <Label styleClass="user-name" text="Osama.A" />
-                            <Label styleClass="user-role" text="Teacher" />
-                        </VBox>
-                    </HBox>
+    <!-- Header Section -->
+    <top>
+        <VBox styleClass="project-header" prefHeight="220.0">
+            <!-- Top Navigation -->
+            <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="top-nav">
+                <HBox alignment="CENTER_LEFT" spacing="10.0" HBox.hgrow="ALWAYS">
+                    <Button fx:id="backButton" styleClass="back-button" text="← Back" />
+                    <Label styleClass="breadcrumb-text" text="Projects > Project Details" />
                 </HBox>
 
-                <Region prefHeight="20.0" />
+                <!-- User Profile -->
+                <HBox alignment="CENTER" spacing="12.0" styleClass="user-section">
+                    <VBox alignment="CENTER_RIGHT" spacing="2.0">
+                        <Label styleClass="user-name" text="Osama.A" />
+                        <Label styleClass="user-role" text="Teacher" />
+                    </VBox>
+                    <HBox alignment="CENTER" styleClass="user-avatar">
+                        <Label styleClass="avatar-text" text="O" />
+                    </HBox>
+                </HBox>
+            </HBox>
 
-                <!-- Project Detail Content -->
-                <VBox spacing="30.0" styleClass="content-section">
+            <!-- Project Title Section -->
+            <VBox spacing="16.0" styleClass="title-section">
+                <HBox alignment="CENTER_LEFT" spacing="12.0">
+                    <Label styleClass="project-title" text="Intro To AI" />
+                    <Label styleClass="project-category" text="🤖 Algorithm" />
+                </HBox>
 
-                    <!-- Project Header Card -->
-                    <VBox spacing="20.0" styleClass="project-header-card">
-                        <HBox alignment="CENTER_LEFT" spacing="20.0">
-                            <VBox alignment="CENTER" prefHeight="80.0" prefWidth="80.0" styleClass="project-icon-large">
-                                <Label styleClass="project-icon-text-large" text="📚" />
-                            </VBox>
-                            <VBox spacing="10.0" HBox.hgrow="ALWAYS">
-                                <Label fx:id="projectTitle" styleClass="project-title-large" text="Project Title" />
-                                <Label fx:id="projectCategory" styleClass="project-subtitle" text="Category" />
-                                <HBox spacing="20.0" styleClass="project-meta-row">
-                                    <HBox spacing="8.0" alignment="CENTER_LEFT">
-                                        <Label text="📅" styleClass="meta-icon" />
-                                        <Label text="Start:" styleClass="meta-label" />
-                                        <Label fx:id="projectStartDate" styleClass="meta-value" text="Mar 15, 2024" />
-                                    </HBox>
-                                    <HBox spacing="8.0" alignment="CENTER_LEFT">
-                                        <Label text="🎯" styleClass="meta-icon" />
-                                        <Label text="Due:" styleClass="meta-label" />
-                                        <Label fx:id="projectDueDate" styleClass="meta-value" text="Mar 30, 2024" />
-                                    </HBox>
-                                    <HBox spacing="8.0" alignment="CENTER_LEFT">
-                                        <Label text="👥" styleClass="meta-icon" />
-                                        <Label fx:id="projectStudents" styleClass="meta-value" text="8 Students" />
-                                    </HBox>
-                                    <HBox spacing="8.0" alignment="CENTER_LEFT">
-                                        <Label text="⏱️" styleClass="meta-icon" />
-                                        <Label fx:id="projectDuration" styleClass="meta-value" text="45 Min" />
-                                    </HBox>
-                                </HBox>
-                            </VBox>
-                            <VBox spacing="10.0" alignment="CENTER_RIGHT">
-                                <Button styleClass="action-btn-primary" text="🚀 Start Project" />
-                                <Button styleClass="action-btn-secondary" text="✏️ Edit Details" />
-                            </VBox>
+                <!-- Project Meta Information -->
+                <GridPane hgap="20.0" vgap="12.0" styleClass="meta-grid">
+                    <columnConstraints>
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                    </columnConstraints>
+
+                    <VBox alignment="CENTER_LEFT" spacing="4.0" styleClass="meta-item" GridPane.columnIndex="0">
+                        <Label styleClass="meta-icon" text="🗓️" />
+                        <Label styleClass="meta-label" text="Start Date" />
+                        <Label styleClass="meta-value" text="Mar 15, 2024" />
+                    </VBox>
+
+                    <VBox alignment="CENTER_LEFT" spacing="4.0" styleClass="meta-item" GridPane.columnIndex="1">
+                        <Label styleClass="meta-icon" text="📅" />
+                        <Label styleClass="meta-label" text="Due Date" />
+                        <Label styleClass="meta-value" text="Mar 30, 2024" />
+                    </VBox>
+
+                    <VBox alignment="CENTER_LEFT" spacing="4.0" styleClass="meta-item" GridPane.columnIndex="2">
+                        <Label styleClass="meta-icon" text="👥" />
+                        <Label styleClass="meta-label" text="Students" />
+                        <Label styleClass="meta-value" text="8 Students" />
+                    </VBox>
+
+                    <VBox alignment="CENTER_LEFT" spacing="4.0" styleClass="meta-item" GridPane.columnIndex="3">
+                        <Label styleClass="meta-icon" text="⏱️" />
+                        <Label styleClass="meta-label" text="Duration" />
+                        <Label styleClass="meta-value" text="45 Minutes" />
+                    </VBox>
+                </GridPane>
+            </VBox>
+        </VBox>
+    </top>
+
+    <!-- Main Content -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="main-scroll">
+            <VBox spacing="24.0" styleClass="main-content">
+
+                <!-- Action Buttons -->
+                <HBox spacing="16.0" styleClass="action-section">
+                    <Button fx:id="startProjectBtn" styleClass="btn-primary" text="🚀 Start Project" />
+                    <Button fx:id="editDetailsBtn" styleClass="btn-secondary" text="✏️ Edit Details" />
+                </HBox>
+
+                <!-- Content Grid -->
+                <GridPane hgap="24.0" vgap="24.0" styleClass="content-grid">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="65.0" />
+                        <ColumnConstraints percentWidth="35.0" />
+                    </columnConstraints>
+
+                    <!-- Project Description Card -->
+                    <VBox spacing="20.0" styleClass="content-card" GridPane.columnIndex="0">
+                        <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="card-header">
+                            <HBox alignment="CENTER" styleClass="card-icon">
+                                <Label styleClass="icon-text" text="📋" />
+                            </HBox>
+                            <Label styleClass="card-title" text="Project Description" />
                         </HBox>
 
-                        <!-- Project Description -->
-                        <VBox spacing="10.0">
-                            <Label styleClass="section-subtitle" text="📋 Project Description" />
-                            <Label fx:id="projectDescription" styleClass="description-text" text="This is the project description. It will be populated with the actual project details when a card is clicked." wrapText="true" />
-                        </VBox>
+                        <Label styleClass="description-text" text="This comprehensive AI introduction project will guide students through the fundamental concepts of artificial intelligence, machine learning, and neural networks. Students will explore real-world applications and gain hands-on experience with AI tools and techniques." wrapText="true" />
 
                         <!-- Progress Section -->
-                        <VBox spacing="12.0">
-                            <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                <Label text="📈" styleClass="meta-icon" />
-                                <Label styleClass="section-subtitle" text="Project Progress" />
+                        <VBox spacing="12.0" styleClass="progress-section">
+                            <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                <Label styleClass="progress-label" text="📈 Project Progress" />
                                 <Region HBox.hgrow="ALWAYS" />
-                                <Label fx:id="progressPercentage" styleClass="progress-percentage" text="85%" />
+                                <Label styleClass="progress-value" text="85%" />
                             </HBox>
-                            <ProgressBar fx:id="progressBar" prefWidth="400.0" progress="0.85" styleClass="modern-progress-bar" />
+                            <ProgressBar fx:id="projectProgress" progress="0.85" styleClass="custom-progress-bar" />
                         </VBox>
                     </VBox>
 
-                    <!-- Tasks Management Section -->
-                    <VBox spacing="20.0" styleClass="tasks-section">
-                        <HBox alignment="CENTER_LEFT" spacing="15.0">
-                            <Label text="📋" styleClass="section-icon" />
-                            <Label styleClass="section-title" text="Task Management" />
-                            <Region HBox.hgrow="ALWAYS" />
-                            <Button fx:id="addTaskBtn" styleClass="add-task-btn" text="+ Add Task" onAction="#showAddTaskDialog" />
+                    <!-- Recent Activities Card -->
+                    <VBox spacing="20.0" styleClass="content-card" GridPane.columnIndex="1">
+                        <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="card-header">
+                            <HBox alignment="CENTER" styleClass="card-icon">
+                                <Label styleClass="icon-text" text="⚡" />
+                            </HBox>
+                            <Label styleClass="card-title" text="Recent Activities" />
                         </HBox>
 
-                        <!-- Tasks Table -->
-                        <TableView fx:id="taskTable" styleClass="modern-table">
-                            <columns>
-                                <TableColumn fx:id="taskNameCol" prefWidth="200.0" text="Task Name" />
-                                <TableColumn fx:id="taskDescriptionCol" prefWidth="250.0" text="Description" />
-                                <TableColumn fx:id="taskAssigneeCol" prefWidth="150.0" text="Assigned To" />
-                                <TableColumn fx:id="taskStartDateCol" prefWidth="120.0" text="Start Date" />
-                                <TableColumn fx:id="taskDueDateCol" prefWidth="120.0" text="Due Date" />
-                                <TableColumn fx:id="taskStatusCol" prefWidth="100.0" text="Status" />
-                                <TableColumn fx:id="taskActionsCol" prefWidth="100.0" text="Actions" />
-                            </columns>
-                        </TableView>
-                    </VBox>
-
-                    <!-- Recent Activities -->
-                    <VBox spacing="15.0" styleClass="activities-card">
-                        <HBox alignment="CENTER_LEFT" spacing="10.0">
-                            <Label text="🔔" styleClass="section-icon" />
-                            <Label styleClass="section-title" text="Recent Activities" />
-                        </HBox>
-                        <VBox spacing="12.0">
-                            <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="activity-item">
-                                <VBox alignment="CENTER" prefHeight="40.0" prefWidth="40.0" styleClass="activity-icon">
-                                    <Label text="📝" />
-                                </VBox>
-                                <VBox spacing="3.0" HBox.hgrow="ALWAYS">
-                                    <Label styleClass="activity-title" text="Project created" />
+                        <VBox spacing="16.0" styleClass="activities-list">
+                            <!-- Activity Item 1 -->
+                            <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="activity-item">
+                                <HBox alignment="CENTER" styleClass="activity-icon activity-created">
+                                    <Label styleClass="activity-icon-text" text="📝" />
+                                </HBox>
+                                <VBox spacing="2.0">
+                                    <Label styleClass="activity-text" text="Project created" />
                                     <Label styleClass="activity-time" text="2 hours ago" />
                                 </VBox>
                             </HBox>
-                            <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="activity-item">
-                                <VBox alignment="CENTER" prefHeight="40.0" prefWidth="40.0" styleClass="activity-icon">
-                                    <Label text="👥" />
-                                </VBox>
-                                <VBox spacing="3.0" HBox.hgrow="ALWAYS">
-                                    <Label styleClass="activity-title" text="8 students enrolled" />
+
+                            <!-- Activity Item 2 -->
+                            <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="activity-item">
+                                <HBox alignment="CENTER" styleClass="activity-icon activity-enrolled">
+                                    <Label styleClass="activity-icon-text" text="👥" />
+                                </HBox>
+                                <VBox spacing="2.0">
+                                    <Label styleClass="activity-text" text="8 students enrolled" />
                                     <Label styleClass="activity-time" text="1 hour ago" />
                                 </VBox>
                             </HBox>
-                            <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="activity-item">
-                                <VBox alignment="CENTER" prefHeight="40.0" prefWidth="40.0" styleClass="activity-icon">
-                                    <Label text="✅" />
-                                </VBox>
-                                <VBox spacing="3.0" HBox.hgrow="ALWAYS">
-                                    <Label styleClass="activity-title" text="First milestone completed" />
+
+                            <!-- Activity Item 3 -->
+                            <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="activity-item">
+                                <HBox alignment="CENTER" styleClass="activity-icon activity-completed">
+                                    <Label styleClass="activity-icon-text" text="✅" />
+                                </HBox>
+                                <VBox spacing="2.0">
+                                    <Label styleClass="activity-text" text="First milestone completed" />
                                     <Label styleClass="activity-time" text="30 minutes ago" />
                                 </VBox>
                             </HBox>
                         </VBox>
                     </VBox>
+                </GridPane>
 
+                <!-- Task Management Section -->
+                <VBox spacing="0" styleClass="task-section">
+                    <!-- Task Header -->
+                    <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="task-header">
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                            <HBox alignment="CENTER" styleClass="card-icon">
+                                <Label styleClass="icon-text" text="📋" />
+                            </HBox>
+                            <Label styleClass="task-title" text="Task Management" />
+                        </HBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button fx:id="addTaskBtn" styleClass="add-task-button" text="+ Add Task" />
+                    </HBox>
+
+                    <!-- Task Table -->
+                    <TableView fx:id="taskTable" styleClass="custom-table">
+                        <columns>
+                            <TableColumn fx:id="taskNameColumn" text="Task Name" prefWidth="150.0" />
+                            <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="200.0" />
+                            <TableColumn fx:id="assignedToColumn" text="Assigned To" prefWidth="120.0" />
+                            <TableColumn fx:id="startDateColumn" text="Start Date" prefWidth="100.0" />
+                            <TableColumn fx:id="dueDateColumn" text="Due Date" prefWidth="100.0" />
+                            <TableColumn fx:id="statusColumn" text="Status" prefWidth="80.0" />
+                            <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="100.0" />
+                        </columns>
+                        <placeholder>
+                            <VBox alignment="CENTER" spacing="16.0" styleClass="empty-state">
+                                <Label styleClass="empty-icon" text="📝" />
+                                <Label styleClass="empty-text" text="No tasks yet" />
+                                <Label styleClass="empty-subtext" text="Create your first task to get started" />
+                            </VBox>
+                        </placeholder>
+                    </TableView>
                 </VBox>
+
             </VBox>
         </ScrollPane>
     </center>

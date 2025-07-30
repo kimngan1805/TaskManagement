@@ -127,11 +127,38 @@ public class ProjectDetailController {
             projectStartDate.setText(projectData.getStartDate().format(DateTimeFormatter.ofPattern("MMM dd, yyyy")));
             projectDueDate.setText(projectData.getDueDate().format(DateTimeFormatter.ofPattern("MMM dd, yyyy")));
             projectStudents.setText(projectData.getStudents() + " Students");
-            projectDuration.setText(projectData.getDuration());
-            projectDescription.setText("This project focuses on " + projectData.getName() + ". " +
+
+            // Thay thế duration bằng thông tin members
+            int memberCount = projectData.getMembers().size();
+            if (memberCount > 0) {
+                projectDuration.setText(memberCount + " Members");
+            } else {
+                projectDuration.setText("No Members");
+            }
+
+            // Cập nhật description để bao gồm thông tin members
+            StringBuilder memberNames = new StringBuilder();
+            if (memberCount > 0) {
+                for (int i = 0; i < Math.min(3, memberCount); i++) {
+                    if (i > 0) memberNames.append(", ");
+                    memberNames.append(projectData.getMembers().get(i).getName());
+                }
+                if (memberCount > 3) {
+                    memberNames.append(" and ").append(memberCount - 3).append(" others");
+                }
+            }
+
+            String descriptionText = "This project focuses on " + projectData.getName() + ". " +
                     projectData.getDescription() + " is designed to help students learn effectively. " +
-                    "The project involves collaborative work with " + projectData.getStudents() +
-                    " students over a duration of " + projectData.getDuration() + ".");
+                    "The project involves collaborative work with " + projectData.getStudents() + " students";
+
+            if (memberCount > 0) {
+                descriptionText += " and " + memberCount + " team members including " + memberNames.toString();
+            }
+
+            descriptionText += ".";
+            projectDescription.setText(descriptionText);
+
             projectBreadcrumb.setText(projectData.getName());
 
             // Set random progress between 60-95%
