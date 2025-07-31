@@ -1,5 +1,6 @@
 package com.example.taskproject.controller;
 
+import com.example.taskproject.model.NoteItem;
 import com.example.taskproject.model.TaskItem;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -11,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -20,475 +22,376 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
 public class NoteController {
-
     // Header elements
-    @FXML private Label noteTitle;
-    @FXML private Label noteDescription;
-    @FXML private Button addTaskBtn;
-
-    // Tab elements
-    @FXML private Button allTasksTab;
-    @FXML private Button byStatusTab;
-    @FXML private Button checklistTab;
-    @FXML private StackPane contentArea;
-
-    // All Tasks View
-    @FXML private VBox allTasksView;
+    @FXML private Button newNoteBtn;
+    @FXML private Button searchBtn;
+    @FXML private HBox searchContainer;
     @FXML private TextField searchField;
-    @FXML private TableView<TaskItem> taskTable;
-    @FXML private TableColumn<TaskItem, String> taskNameCol;
-    @FXML private TableColumn<TaskItem, String> taskStatusCol;
-    @FXML private TableColumn<TaskItem, String> taskAssignCol;
-    @FXML private TableColumn<TaskItem, LocalDate> taskStartDateCol;
-    @FXML private TableColumn<TaskItem, LocalDate> taskDueDateCol;
-    @FXML private TableColumn<TaskItem, Void> taskActionsCol;
 
-    // By Status View (Kanban)
-    @FXML private VBox byStatusView;
-    @FXML private VBox notStartedTasks;
-    @FXML private VBox inProgressTasks;
-    @FXML private VBox completeTasks;
-    @FXML private Label notStartedCount;
-    @FXML private Label inProgressCount;
-    @FXML private Label completeCount;
+    // Filter and sort elements
+    @FXML private ComboBox<String> filterComboBox;
+    @FXML private ComboBox<String> sortComboBox;
 
-    // Checklist View
-    @FXML private VBox checklistView;
-    @FXML private VBox checklistContainer;
-    @FXML private Label completionProgress;
+    // Notes grid
+    @FXML private FlowPane notesGrid;
+    @FXML private VBox emptyState;
 
-    private final ObservableList<TaskItem> taskList = FXCollections.observableArrayList();
-    private String currentView = "allTasks";
+    private final ObservableList<NoteItem> notesList = FXCollections.observableArrayList();
+    private boolean isGridView = true;
 
     @FXML
     private void initialize() {
-        setupTaskTable();
+        setupComboBoxes();
         setupSearchField();
-        addSampleTasks();
-        refreshAllViews();
+        addSampleNotes();
+        refreshNotesGrid();
     }
 
-    private void setupTaskTable() {
-        taskNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        taskAssignCol.setCellValueFactory(new PropertyValueFactory<>("assignedTo"));
-        taskStartDateCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-        taskDueDateCol.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+    private void setupComboBoxes() {
+        filterComboBox.setValue("All Notes");
+        sortComboBox.setValue("Last Modified");
 
-        // Custom status column with styling
-        taskStatusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
-        taskStatusCol.setCellFactory(column -> new TableCell<TaskItem, String>() {
-            @Override
-            protected void updateItem(String status, boolean empty) {
-                super.updateItem(status, empty);
-                if (empty || status == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    Label statusLabel = new Label(status);
-                    switch (status.toLowerCase()) {
-                        case "not started":
-                            statusLabel.getStyleClass().add("status-not-started");
-                            break;
-                        case "in progress":
-                            statusLabel.getStyleClass().add("status-in-progress");
-                            break;
-                        case "complete":
-                            statusLabel.getStyleClass().add("status-complete");
-                            break;
-                    }
-                    setGraphic(statusLabel);
-                    setText(null);
-                }
-            }
-        });
-
-        // Actions column
-        taskActionsCol.setCellFactory(param -> new TableCell<TaskItem, Void>() {
-            private final Button editBtn = new Button("✏️");
-            private final Button deleteBtn = new Button("🗑️");
-            private final HBox hbox = new HBox(5, editBtn, deleteBtn);
-
-            {
-                editBtn.getStyleClass().add("table-action-btn");
-                deleteBtn.getStyleClass().add("table-action-btn");
-                hbox.setAlignment(Pos.CENTER);
-
-                editBtn.setOnAction(e -> {
-                    TaskItem task = getTableView().getItems().get(getIndex());
-                    showEditTaskDialog(task);
-                });
-
-                deleteBtn.setOnAction(e -> {
-                    TaskItem task = getTableView().getItems().get(getIndex());
-                    taskList.remove(task);
-                    refreshAllViews();
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                setGraphic(empty ? null : hbox);
-            }
-        });
-
-        taskTable.setItems(taskList);
+        filterComboBox.setOnAction(e -> refreshNotesGrid());
+        sortComboBox.setOnAction(e -> refreshNotesGrid());
     }
 
     private void setupSearchField() {
-        searchField.textProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal.trim().isEmpty()) {
-                taskTable.setItems(taskList);
-            } else {
-                ObservableList<TaskItem> filteredList = taskList.filtered(task ->
-                        task.getName().toLowerCase().contains(newVal.toLowerCase()) ||
-                                task.getAssignedTo().toLowerCase().contains(newVal.toLowerCase()) ||
-                                task.getStatus().toLowerCase().contains(newVal.toLowerCase())
-                );
-                taskTable.setItems(filteredList);
+        searchField.textProperty().addListener((obs, oldVal, newVal) -> refreshNotesGrid());
+    }
+
+    private void addSampleNotes() {
+        notesList.addAll(
+                new NoteItem("Project Planning", "Planning and organizing the new mobile app project with team requirements and deadlines.",
+                        5, 12, LocalDateTime.now().minusDays(1), "In Progress"),
+                new NoteItem("Meeting Notes", "Weekly team meeting notes covering project updates, challenges, and next steps.",
+                        8, 8, LocalDateTime.now().minusDays(3), "Completed"),
+                new NoteItem("Design Ideas", "Brainstorming session for UI/UX improvements and new feature concepts.",
+                        3, 15, LocalDateTime.now().minusDays(2), "Not Started"),
+                new NoteItem("Code Review", "Technical review notes and feedback for the latest sprint deliverables.",
+                        6, 6, LocalDateTime.now().minusDays(5), "Completed"),
+                new NoteItem("Research Notes", "Market research and competitor analysis for product positioning strategy.",
+                        4, 20, LocalDateTime.now().minusDays(1), "In Progress")
+        );
+    }
+
+    private void refreshNotesGrid() {
+        notesGrid.getChildren().clear();
+
+        ObservableList<NoteItem> filteredNotes = getFilteredNotes();
+
+        if (filteredNotes.isEmpty()) {
+            emptyState.setVisible(true);
+            emptyState.setManaged(true);
+            notesGrid.setVisible(false);
+            notesGrid.setManaged(false);
+        } else {
+            emptyState.setVisible(false);
+            emptyState.setManaged(false);
+            notesGrid.setVisible(true);
+            notesGrid.setManaged(true);
+
+            for (NoteItem note : filteredNotes) {
+                VBox noteCard = createNoteCard(note);
+                notesGrid.getChildren().add(noteCard);
             }
-        });
-    }
-
-    private void addSampleTasks() {
-        taskList.addAll(Arrays.asList(
-                new TaskItem("Design UI Components", "Not Started", "John Doe",
-                        LocalDate.now(), LocalDate.now().plusDays(5)),
-                new TaskItem("Backend API Development", "In Progress", "Jane Smith",
-                        LocalDate.now().minusDays(2), LocalDate.now().plusDays(3)),
-                new TaskItem("Database Setup", "Complete", "Mike Johnson",
-                        LocalDate.now().minusDays(5), LocalDate.now().minusDays(1)),
-                new TaskItem("User Authentication", "In Progress", "Sarah Wilson",
-                        LocalDate.now().minusDays(1), LocalDate.now().plusDays(2)),
-                new TaskItem("Testing & QA", "Not Started", "David Brown",
-                        LocalDate.now().plusDays(1), LocalDate.now().plusDays(7))
-        ));
-    }
-
-    @FXML
-    private void showAllTasks() {
-        switchToView("allTasks");
-        updateTabStyles();
-    }
-
-    @FXML
-    private void showByStatus() {
-        switchToView("byStatus");
-        updateTabStyles();
-        refreshKanbanView();
-    }
-
-    @FXML
-    private void showChecklist() {
-        switchToView("checklist");
-        updateTabStyles();
-        refreshChecklistView();
-    }
-
-    private void switchToView(String viewName) {
-        currentView = viewName;
-
-        // Hide all views
-        allTasksView.setVisible(false);
-        allTasksView.setManaged(false);
-        byStatusView.setVisible(false);
-        byStatusView.setManaged(false);
-        checklistView.setVisible(false);
-        checklistView.setManaged(false);
-
-        // Show selected view
-        switch (viewName) {
-            case "allTasks":
-                allTasksView.setVisible(true);
-                allTasksView.setManaged(true);
-                break;
-            case "byStatus":
-                byStatusView.setVisible(true);
-                byStatusView.setManaged(true);
-                break;
-            case "checklist":
-                checklistView.setVisible(true);
-                checklistView.setManaged(true);
-                break;
         }
     }
 
-    private void updateTabStyles() {
-        // Remove active class from all tabs
-        allTasksTab.getStyleClass().remove("tab-active");
-        byStatusTab.getStyleClass().remove("tab-active");
-        checklistTab.getStyleClass().remove("tab-active");
+    private ObservableList<NoteItem> getFilteredNotes() {
+        ObservableList<NoteItem> filtered = FXCollections.observableArrayList(notesList);
 
-        // Add active class to current tab
-        switch (currentView) {
-            case "allTasks":
-                allTasksTab.getStyleClass().add("tab-active");
-                break;
-            case "byStatus":
-                byStatusTab.getStyleClass().add("tab-active");
-                break;
-            case "checklist":
-                checklistTab.getStyleClass().add("tab-active");
-                break;
+        // Apply search filter
+        String searchText = searchField.getText();
+        if (searchText != null && !searchText.trim().isEmpty()) {
+            filtered = filtered.filtered(note ->
+                    note.getTitle().toLowerCase().contains(searchText.toLowerCase()) ||
+                            note.getDescription().toLowerCase().contains(searchText.toLowerCase())
+            );
         }
-    }
 
-    private void refreshKanbanView() {
-        // Clear existing task cards
-        notStartedTasks.getChildren().clear();
-        inProgressTasks.getChildren().clear();
-        completeTasks.getChildren().clear();
-
-        int notStartedCnt = 0, inProgressCnt = 0, completeCnt = 0;
-
-        // Populate kanban columns
-        for (TaskItem task : taskList) {
-            VBox taskCard = createKanbanTaskCard(task);
-
-            switch (task.getStatus().toLowerCase()) {
-                case "not started":
-                    notStartedTasks.getChildren().add(taskCard);
-                    notStartedCnt++;
+        // Apply status filter
+        String statusFilter = filterComboBox.getValue();
+        if (statusFilter != null && !statusFilter.equals("All Notes")) {
+            switch (statusFilter) {
+                case "Recent":
+                    filtered = filtered.filtered(note ->
+                            note.getLastModified().isAfter(LocalDateTime.now().minusDays(7))
+                    );
                     break;
-                case "in progress":
-                    inProgressTasks.getChildren().add(taskCard);
-                    inProgressCnt++;
+                case "Favorites":
+                    // Could add a favorite field to NoteItem later
                     break;
-                case "complete":
-                    completeTasks.getChildren().add(taskCard);
-                    completeCnt++;
+                case "Completed":
+                    filtered = filtered.filtered(note ->
+                            note.getStatus().equalsIgnoreCase("Completed")
+                    );
+                    break;
+                case "In Progress":
+                    filtered = filtered.filtered(note ->
+                            note.getStatus().equalsIgnoreCase("In Progress")
+                    );
                     break;
             }
         }
 
-        // Update counts
-        notStartedCount.setText(String.valueOf(notStartedCnt));
-        inProgressCount.setText(String.valueOf(inProgressCnt));
-        completeCount.setText(String.valueOf(completeCnt));
+        // Apply sorting
+        String sortBy = sortComboBox.getValue();
+        if (sortBy != null) {
+            switch (sortBy) {
+                case "Last Modified":
+                    filtered.sort((a, b) -> b.getLastModified().compareTo(a.getLastModified()));
+                    break;
+                case "Created Date":
+                    filtered.sort((a, b) -> b.getCreatedDate().compareTo(a.getCreatedDate()));
+                    break;
+                case "Title A-Z":
+                    filtered.sort((a, b) -> a.getTitle().compareToIgnoreCase(b.getTitle()));
+                    break;
+                case "Title Z-A":
+                    filtered.sort((a, b) -> b.getTitle().compareToIgnoreCase(a.getTitle()));
+                    break;
+            }
+        }
+
+        return filtered;
     }
 
-    private VBox createKanbanTaskCard(TaskItem task) {
+    private VBox createNoteCard(NoteItem note) {
         VBox card = new VBox();
-        card.setSpacing(8);
-        card.getStyleClass().add("kanban-task-card");
-        card.setPadding(new Insets(12));
+        card.setSpacing(15);
+        card.getStyleClass().add("note-card");
 
-        Label taskName = new Label(task.getName());
-        taskName.getStyleClass().add("kanban-task-name");
-        taskName.setWrapText(true);
+        // Header with icon and actions
+        HBox header = new HBox();
+        header.setAlignment(Pos.CENTER_LEFT);
+        header.setSpacing(12);
+        header.getStyleClass().add("note-card-header");
 
-        Label assignedTo = new Label("👤 " + task.getAssignedTo());
-        assignedTo.getStyleClass().add("kanban-task-assign");
+        // Note icon
+        VBox iconContainer = new VBox();
+        iconContainer.setAlignment(Pos.CENTER);
+        iconContainer.getStyleClass().add("note-icon");
+        Label iconLabel = new Label("📝");
+        iconLabel.setStyle("-fx-font-size: 20px;");
+        iconContainer.getChildren().add(iconLabel);
 
-        Label dueDate = new Label("📅 " + task.getDueDate().format(DateTimeFormatter.ofPattern("MMM dd")));
-        dueDate.getStyleClass().add("kanban-task-date");
+        // Title and status
+        VBox titleContainer = new VBox();
+        titleContainer.setSpacing(5);
+
+        Label titleLabel = new Label(note.getTitle());
+        titleLabel.getStyleClass().add("note-title");
+
+        Label statusBadge = new Label(note.getStatus());
+        statusBadge.getStyleClass().addAll("note-status-badge", "status-" + note.getStatus().toLowerCase().replace(" ", "-"));
+
+        titleContainer.getChildren().addAll(titleLabel, statusBadge);
+
+        header.getChildren().addAll(iconContainer, titleContainer);
+
+        // Description
+        Label descLabel = new Label(note.getDescription());
+        descLabel.getStyleClass().add("note-description");
+        descLabel.setWrapText(true);
+        descLabel.setMaxHeight(60);
+
+        // Stats
+        HBox stats = new HBox();
+        stats.setSpacing(15);
+        stats.getStyleClass().add("note-stats");
+
+        VBox tasksStats = new VBox();
+        tasksStats.setAlignment(Pos.CENTER);
+        tasksStats.getStyleClass().add("note-stat-item");
+        Label tasksLabel = new Label("TASKS");
+        tasksLabel.getStyleClass().add("note-stat-label");
+        Label tasksValue = new Label(String.valueOf(note.getTotalTasks()));
+        tasksValue.getStyleClass().add("note-stat-value");
+        tasksStats.getChildren().addAll(tasksLabel, tasksValue);
+
+        VBox completedStats = new VBox();
+        completedStats.setAlignment(Pos.CENTER);
+        completedStats.getStyleClass().add("note-stat-item");
+        Label completedLabel = new Label("COMPLETED");
+        completedLabel.getStyleClass().add("note-stat-label");
+        Label completedValue = new Label(String.valueOf(note.getCompletedTasks()));
+        completedValue.getStyleClass().add("note-stat-value");
+        completedStats.getChildren().addAll(completedLabel, completedValue);
+
+        stats.getChildren().addAll(tasksStats, completedStats);
+
+        // Footer with date and actions
+        HBox footer = new HBox();
+        footer.setAlignment(Pos.CENTER_LEFT);
+        footer.setSpacing(10);
+        footer.getStyleClass().add("note-footer");
+
+        Label dateLabel = new Label("Modified " + note.getLastModified().format(DateTimeFormatter.ofPattern("MMM dd, yyyy")));
+        dateLabel.getStyleClass().add("note-date");
 
         HBox actions = new HBox();
-        actions.setSpacing(5);
+        actions.setSpacing(8);
         actions.setAlignment(Pos.CENTER_RIGHT);
+        actions.getStyleClass().add("note-actions");
+
+        Button openBtn = new Button("📖");
+        openBtn.getStyleClass().add("note-action-btn");
+        openBtn.setOnAction(e -> openNoteDetail(note));
+        openBtn.setTooltip(new Tooltip("Open Note"));
 
         Button editBtn = new Button("✏️");
-        editBtn.getStyleClass().add("kanban-action-btn");
-        editBtn.setOnAction(e -> showEditTaskDialog(task));
+        editBtn.getStyleClass().add("note-action-btn");
+        editBtn.setOnAction(e -> editNote(note));
+        editBtn.setTooltip(new Tooltip("Edit Note"));
 
         Button deleteBtn = new Button("🗑️");
-        deleteBtn.getStyleClass().add("kanban-action-btn");
-        deleteBtn.setOnAction(e -> {
-            taskList.remove(task);
-            refreshAllViews();
+        deleteBtn.getStyleClass().add("note-action-btn");
+        deleteBtn.setOnAction(e -> deleteNote(note));
+        deleteBtn.setTooltip(new Tooltip("Delete Note"));
+
+        actions.getChildren().addAll(openBtn, editBtn, deleteBtn);
+
+        footer.getChildren().addAll(dateLabel, actions);
+
+        card.getChildren().addAll(header, descLabel, stats, footer);
+
+        // Add click handler to open note detail
+        card.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                openNoteDetail(note);
+            }
         });
 
-        actions.getChildren().addAll(editBtn, deleteBtn);
-
-        card.getChildren().addAll(taskName, assignedTo, dueDate, actions);
         return card;
     }
 
-    private void refreshChecklistView() {
-        checklistContainer.getChildren().clear();
-
-        int completedCount = 0;
-        int totalCount = taskList.size();
-
-        for (TaskItem task : taskList) {
-            HBox checklistItem = new HBox();
-            checklistItem.setSpacing(12);
-            checklistItem.setAlignment(Pos.CENTER_LEFT);
-            checklistItem.getStyleClass().add("checklist-item");
-            checklistItem.setPadding(new Insets(12));
-
-            CheckBox checkBox = new CheckBox();
-            checkBox.setSelected(task.getStatus().equalsIgnoreCase("complete"));
-
-            if (checkBox.isSelected()) {
-                completedCount++;
-            }
-
-            Label taskLabel = new Label(task.getName());
-            taskLabel.getStyleClass().add("checklist-task-name");
-
-            // Strike through completed tasks
-            if (checkBox.isSelected()) {
-                taskLabel.getStyleClass().add("task-completed");
-            }
-
-            Label assignLabel = new Label("👤 " + task.getAssignedTo());
-            assignLabel.getStyleClass().add("checklist-assign");
-
-            Label dateLabel = new Label("📅 " + task.getDueDate().format(DateTimeFormatter.ofPattern("MMM dd, yyyy")));
-            dateLabel.getStyleClass().add("checklist-date");
-
-            checkBox.setOnAction(e -> {
-                String newStatus = checkBox.isSelected() ? "Complete" : "Not Started";
-                task.setStatus(newStatus);
-
-                if (checkBox.isSelected()) {
-                    taskLabel.getStyleClass().add("task-completed");
-                } else {
-                    taskLabel.getStyleClass().remove("task-completed");
-                }
-
-                refreshChecklistView();
-                refreshKanbanView();
-            });
-
-            checklistItem.getChildren().addAll(checkBox, taskLabel, assignLabel, dateLabel);
-            checklistContainer.getChildren().add(checklistItem);
-        }
-
-        completionProgress.setText(completedCount + "/" + totalCount + " completed");
+    @FXML
+    private void showNewNoteDialog() {
+        showNoteDialog(null, false);
     }
 
-    private void refreshAllViews() {
-        if (currentView.equals("byStatus")) {
-            refreshKanbanView();
-        } else if (currentView.equals("checklist")) {
-            refreshChecklistView();
+    private void editNote(NoteItem note) {
+        showNoteDialog(note, true);
+    }
+
+    private void deleteNote(NoteItem note) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Note");
+        alert.setHeaderText("Delete \"" + note.getTitle() + "\"?");
+        alert.setContentText("This action cannot be undone.");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                notesList.remove(note);
+                refreshNotesGrid();
+            }
+        });
+    }
+
+    private void openNoteDetail(NoteItem note) {
+        try {
+            // Load the existing note-view.fxml (your detailed task management interface)
+            Stage stage = (Stage) newNoteBtn.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/taskproject/note-view.fxml"));
+            Scene scene = new Scene(loader.load(), 1400, 900);
+            scene.getStylesheets().add(getClass().getResource("/css/note.css").toExternalForm());
+
+            // Pass the note data to the NoteController if needed
+            NoteController controller = loader.getController();
+            // You can add a method to set the current note in NoteController
+
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Could not open note detail view.");
         }
     }
 
-    @FXML
-    private void showAddTaskDialog() {
-        showTaskDialog(null, false);
-    }
-
-    private void showEditTaskDialog(TaskItem task) {
-        showTaskDialog(task, true);
-    }
-
-    @FXML
-    private void addTaskToNotStarted() {
-        showTaskDialogWithStatus("Not Started");
-    }
-
-    @FXML
-    private void addTaskToInProgress() {
-        showTaskDialogWithStatus("In Progress");
-    }
-
-    @FXML
-    private void addTaskToComplete() {
-        showTaskDialogWithStatus("Complete");
-    }
-
-    private void showTaskDialogWithStatus(String status) {
-        TaskItem newTask = new TaskItem("", status, "", LocalDate.now(), LocalDate.now().plusDays(7));
-        showTaskDialog(newTask, false);
-    }
-
-    private void showTaskDialog(TaskItem existingTask, boolean isEdit) {
-        // Create modern dialog similar to project dialog
+    private void showNoteDialog(NoteItem existingNote, boolean isEdit) {
         Stage dialogStage = new Stage();
         dialogStage.initModality(Modality.APPLICATION_MODAL);
-        dialogStage.setTitle(isEdit ? "Edit Task" : "Add New Task");
+        dialogStage.setTitle(isEdit ? "Edit Note" : "Create New Note");
         dialogStage.setResizable(false);
 
         VBox mainContainer = new VBox();
         mainContainer.setSpacing(25);
         mainContainer.setPadding(new Insets(35));
         mainContainer.setStyle("-fx-background-color: white; -fx-background-radius: 25; " +
-                "-fx-border-color: rgba(76, 107, 182, 0.2); -fx-border-width: 1; -fx-border-radius: 25; " +
+                "-fx-border-color: rgba(102, 126, 234, 0.2); -fx-border-width: 1; -fx-border-radius: 25; " +
                 "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 30, 0, 0, 10);");
         mainContainer.setPrefWidth(500);
 
         // Header
-        HBox header = createDialogHeader(isEdit ? "Edit Task" : "Create Task", dialogStage);
+        HBox header = createDialogHeader(isEdit ? "Edit Note" : "Create Note", dialogStage);
 
         // Form fields
         VBox formContainer = new VBox();
         formContainer.setSpacing(20);
 
-        // Task Name
-        TextField taskNameField = createStyledTextField("Enter task name");
-        VBox nameGroup = createFieldGroup("Task Name", taskNameField);
+        // Note Title
+        TextField titleField = createStyledTextField("Enter note title");
+        VBox titleGroup = createFieldGroup("Note Title", titleField);
 
-        // Assigned To
-        TextField assignedToField = createStyledTextField("Enter assignee name");
-        VBox assignGroup = createFieldGroup("Assigned To", assignedToField);
+        // Note Description
+        TextArea descArea = new TextArea();
+        descArea.setPromptText("Enter note description");
+        descArea.setPrefRowCount(4);
+        descArea.setWrapText(true);
+        descArea.setStyle("-fx-background-color: rgba(248, 250, 252, 0.8); -fx-border-color: rgba(226, 232, 240, 0.8); " +
+                "-fx-border-radius: 12; -fx-background-radius: 12; " +
+                "-fx-padding: 12 16 12 16; -fx-font-size: 14px; -fx-font-weight: 500;");
+        VBox descGroup = createFieldGroup("Description", descArea);
 
         // Status
         ComboBox<String> statusComboBox = new ComboBox<>();
-        statusComboBox.setItems(FXCollections.observableArrayList("Not Started", "In Progress", "Complete"));
+        statusComboBox.setItems(FXCollections.observableArrayList("Not Started", "In Progress", "Completed"));
         statusComboBox.setValue("Not Started");
         statusComboBox.setStyle(createStyledTextField("").getStyle());
         VBox statusGroup = createFieldGroup("Status", statusComboBox);
 
-        // Date fields
-        HBox datesRow = new HBox();
-        datesRow.setSpacing(15);
-
-        DatePicker startDatePicker = createStyledDatePicker();
-        startDatePicker.setValue(LocalDate.now());
-        VBox startDateGroup = createFieldGroup("Start Date", startDatePicker);
-
-        DatePicker dueDatePicker = createStyledDatePicker();
-        dueDatePicker.setValue(LocalDate.now().plusDays(7));
-        VBox dueDateGroup = createFieldGroup("Due Date", dueDatePicker);
-
-        datesRow.getChildren().addAll(startDateGroup, dueDateGroup);
-
-        formContainer.getChildren().addAll(nameGroup, assignGroup, statusGroup, datesRow);
+        formContainer.getChildren().addAll(titleGroup, descGroup, statusGroup);
 
         // Populate fields if editing
-        if (isEdit && existingTask != null) {
-            taskNameField.setText(existingTask.getName());
-            assignedToField.setText(existingTask.getAssignedTo());
-            statusComboBox.setValue(existingTask.getStatus());
-            startDatePicker.setValue(existingTask.getStartDate());
-            dueDatePicker.setValue(existingTask.getDueDate());
-        } else if (existingTask != null) {
-            // For new task with preset status
-            statusComboBox.setValue(existingTask.getStatus());
+        if (isEdit && existingNote != null) {
+            titleField.setText(existingNote.getTitle());
+            descArea.setText(existingNote.getDescription());
+            statusComboBox.setValue(existingNote.getStatus());
         }
 
         // Buttons
         HBox buttonContainer = createDialogButtons(dialogStage, isEdit, () -> {
-            if (isEdit && existingTask != null) {
-                // Update existing task
-                existingTask.setName(taskNameField.getText().trim());
-                existingTask.setAssignedTo(assignedToField.getText().trim());
-                existingTask.setStatus(statusComboBox.getValue());
-                existingTask.setStartDate(startDatePicker.getValue());
-                existingTask.setDueDate(dueDatePicker.getValue());
-            } else {
-                // Create new task
-                TaskItem newTask = new TaskItem(
-                        taskNameField.getText().trim(),
-                        statusComboBox.getValue(),
-                        assignedToField.getText().trim(),
-                        startDatePicker.getValue(),
-                        dueDatePicker.getValue()
-                );
-                taskList.add(newTask);
+            if (titleField.getText().trim().isEmpty()) {
+                showAlert("Validation Error", "Please enter a note title.");
+                return;
             }
-            refreshAllViews();
+
+            if (isEdit && existingNote != null) {
+                // Update existing note
+                existingNote.setTitle(titleField.getText().trim());
+                existingNote.setDescription(descArea.getText().trim());
+                existingNote.setStatus(statusComboBox.getValue());
+                existingNote.setLastModified(LocalDateTime.now());
+            } else {
+                // Create new note
+                NoteItem newNote = new NoteItem(
+                        titleField.getText().trim(),
+                        descArea.getText().trim(),
+                        0, // Initial task count
+                        0, // Initial completed tasks
+                        LocalDateTime.now(),
+                        statusComboBox.getValue()
+                );
+                notesList.add(newNote);
+            }
+            refreshNotesGrid();
             dialogStage.close();
-        }, taskNameField);
+        }, titleField);
 
         mainContainer.getChildren().addAll(header, formContainer, buttonContainer);
 
@@ -498,7 +401,7 @@ public class NoteController {
         sceneContainer.setStyle("-fx-background-color: rgba(30, 41, 59, 0.4);");
         sceneContainer.getChildren().add(mainContainer);
 
-        Scene scene = new Scene(sceneContainer, 600, 700);
+        Scene scene = new Scene(sceneContainer, 600, 650);
         scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
 
         dialogStage.initStyle(StageStyle.TRANSPARENT);
@@ -506,6 +409,34 @@ public class NoteController {
         dialogStage.showAndWait();
     }
 
+    @FXML
+    private void hideSearchBar() {
+        searchContainer.setVisible(false);
+        searchContainer.setManaged(false);
+        searchField.clear();
+    }
+
+    @FXML
+    private void toggleGridView() {
+        isGridView = !isGridView;
+        // Could implement list view vs grid view here
+        refreshNotesGrid();
+    }
+
+    @FXML
+    private void goToHome() {
+        try {
+            Stage stage = (Stage) newNoteBtn.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/taskproject/hello-view.fxml"));
+            Scene scene = new Scene(loader.load(), 1400, 900);
+            scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Helper methods
     private HBox createDialogHeader(String title, Stage dialogStage) {
         HBox header = new HBox();
         header.setAlignment(Pos.CENTER_LEFT);
@@ -515,8 +446,8 @@ public class NoteController {
         VBox iconContainer = new VBox();
         iconContainer.setAlignment(Pos.CENTER);
         iconContainer.setPrefSize(60, 60);
-        iconContainer.setStyle("-fx-background-color: linear-gradient(135deg, rgba(76, 107, 182, 0.15), rgba(99, 102, 241, 0.15)); " +
-                "-fx-background-radius: 30; -fx-border-color: rgba(76, 107, 182, 0.3); -fx-border-width: 2; -fx-border-radius: 30;");
+        iconContainer.setStyle("-fx-background-color: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15)); " +
+                "-fx-background-radius: 30; -fx-border-color: rgba(102, 126, 234, 0.3); -fx-border-width: 2; -fx-border-radius: 30;");
 
         Label iconLabel = new Label("📝");
         iconLabel.setStyle("-fx-font-size: 24px;");
@@ -537,7 +468,7 @@ public class NoteController {
         return header;
     }
 
-    private HBox createDialogButtons(Stage dialogStage, boolean isEdit, Runnable onSave, TextField nameField) {
+    private HBox createDialogButtons(Stage dialogStage, boolean isEdit, Runnable onSave, TextField titleField) {
         HBox buttonContainer = new HBox();
         buttonContainer.setSpacing(15);
         buttonContainer.setAlignment(Pos.CENTER);
@@ -549,14 +480,14 @@ public class NoteController {
         cancelButton.setOnAction(e -> dialogStage.close());
 
         Button saveButton = new Button(isEdit ? "Update" : "Create");
-        saveButton.setStyle("-fx-background-color: linear-gradient(135deg, #4C6BB6, #6366f1); -fx-background-radius: 12; " +
+        saveButton.setStyle("-fx-background-color: linear-gradient(135deg, #667eea, #764ba2); -fx-background-radius: 12; " +
                 "-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: 600; " +
                 "-fx-padding: 12 24 12 24; -fx-cursor: hand; " +
-                "-fx-effect: dropshadow(gaussian, rgba(76, 107, 182, 0.4), 12, 0, 0, 4);");
+                "-fx-effect: dropshadow(gaussian, rgba(102, 126, 234, 0.4), 12, 0, 0, 4);");
 
         // Enable/disable save button
         saveButton.setDisable(true);
-        nameField.textProperty().addListener((obs, old, newVal) -> {
+        titleField.textProperty().addListener((obs, old, newVal) -> {
             saveButton.setDisable(newVal.trim().isEmpty());
         });
 
@@ -586,24 +517,11 @@ public class NoteController {
         return field;
     }
 
-    private DatePicker createStyledDatePicker() {
-        DatePicker picker = new DatePicker();
-        picker.setStyle("-fx-background-color: rgba(248, 250, 252, 0.8); -fx-border-color: rgba(226, 232, 240, 0.8); " +
-                "-fx-border-radius: 12; -fx-background-radius: 12; " +
-                "-fx-padding: 12 16 12 16; -fx-font-size: 14px; -fx-font-weight: 500;");
-        return picker;
-    }
-
-    @FXML
-    private void goToHome() {
-        try {
-            Stage stage = (Stage) noteTitle.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
-            Scene scene = new Scene(loader.load(), 1400, 900);
-            scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
-            stage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

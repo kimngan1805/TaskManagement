@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.taskproject.controller.NoteController">
+<BorderPane stylesheets="@../../../css/note.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.taskproject.controller.NoteController">
     <left>
         <!-- Sidebar -->
-        <VBox prefHeight="600.0" prefWidth="260.0" styleClass="modern-sidebar">
+        <VBox prefHeight="600.0" prefWidth="260.0" styleClass="modern-sidebar" stylesheets="@../../../css/note.css">
             <!-- Logo Section with Gradient -->
             <VBox alignment="CENTER" prefHeight="100.0" styleClass="modern-logo-section">
                 <VBox alignment="CENTER" styleClass="logo-container">
@@ -22,7 +34,7 @@
 
             <!-- Navigation Menu with Modern Styling -->
             <VBox prefHeight="470.0" prefWidth="260.0" spacing="8.0" styleClass="modern-nav-menu">
-                <Button mnemonicParsing="false" prefWidth="240.0" styleClass="modern-nav-button" text=" Home" onAction="#goToHome">
+                <Button mnemonicParsing="false" onAction="#goToHome" prefWidth="240.0" styleClass="modern-nav-button" text=" Home">
                     <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0">
                             <image>
@@ -83,8 +95,8 @@
                                         </ImageView>
                                     </graphic>
                                 </Label>
-                                <Label styleClass="breadcrumb-separator" text=">" />
-                                <Label styleClass="breadcrumb-current" text="Notes &amp; Tasks" />
+                                <Label styleClass="breadcrumb-separator" text="&gt;" />
+                                <Label styleClass="breadcrumb-current" text="My Notes" />
                             </HBox>
                         </VBox>
                     </HBox>
@@ -139,11 +151,11 @@
                 <!-- Content Area with Modern Cards -->
                 <VBox spacing="25.0" styleClass="modern-content-area">
 
-                    <!-- Note Header Card -->
-                    <VBox spacing="20.0" styleClass="modern-project-card">
+                    <!-- Dashboard Header -->
+                    <VBox spacing="20.0" styleClass="dashboard-header-card">
                         <HBox alignment="CENTER_LEFT" spacing="20.0">
-                            <!-- Note Icon -->
-                            <VBox alignment="CENTER" prefHeight="70.0" prefWidth="70.0" styleClass="modern-note-icon">
+                            <!-- Notes Icon -->
+                            <VBox alignment="CENTER" prefHeight="70.0" prefWidth="70.0" styleClass="dashboard-notes-icon">
                                 <ImageView fitHeight="32.0" fitWidth="32.0">
                                     <image>
                                         <Image url="@image/note.png" />
@@ -151,119 +163,79 @@
                                 </ImageView>
                             </VBox>
 
-                            <!-- Note Details -->
+                            <!-- Notes Details -->
                             <VBox spacing="8.0" HBox.hgrow="ALWAYS">
-                                <Label fx:id="noteTitle" styleClass="modern-note-title" text="My Task Notes" />
-                                <Label fx:id="noteDescription" styleClass="modern-note-description"
-                                       text="Organize and manage all your tasks efficiently" />
+                                <Label styleClass="dashboard-title" text="My Notes" />
+                                <Label styleClass="dashboard-description" text="Organize and manage all your notes and tasks" />
                             </VBox>
 
-                            <!-- Action Button -->
-                            <Button fx:id="addTaskBtn" styleClass="modern-add-button" text="+ Add Task" onAction="#showAddTaskDialog" />
+                            <!-- Action Buttons -->
+                            <HBox spacing="12.0">
+                                <Button fx:id="newNoteBtn" onAction="#showNewNoteDialog" styleClass="new-note-button" text="+ New Note" />
+                                <Button fx:id="searchBtn" styleClass="search-button" text="🔍">
+                                    <tooltip>
+                                        <Tooltip text="Search Notes" />
+                                    </tooltip>
+                                </Button>
+                            </HBox>
+                        </HBox>
+
+                        <!-- Search Bar (Initially Hidden) -->
+                        <HBox fx:id="searchContainer" managed="false" spacing="15.0" styleClass="search-container" visible="false">
+                            <TextField fx:id="searchField" promptText="🔍 Search notes by title, content, or tags..." styleClass="dashboard-search-field" HBox.hgrow="ALWAYS" />
+                            <Button onAction="#hideSearchBar" styleClass="search-close-btn" text="✕" />
                         </HBox>
                     </VBox>
 
-                    <!-- Task Management Tabs -->
-                    <VBox spacing="20.0" styleClass="modern-tasks-card">
-                        <!-- Tab Navigation -->
-                        <HBox spacing="5.0" styleClass="tab-navigation">
-                            <Button fx:id="allTasksTab" styleClass="task-tab,tab-active" text="All Tasks" onAction="#showAllTasks" />
-                            <Button fx:id="byStatusTab" styleClass="task-tab" text="By Status" onAction="#showByStatus" />
-                            <Button fx:id="checklistTab" styleClass="task-tab" text="Checklist" onAction="#showChecklist" />
-                        </HBox>
+                    <!-- Filter and Sort Options -->
+                    <HBox spacing="15.0" styleClass="filter-sort-container">
+                        <Label styleClass="filter-label" text="Filter:" />
+                        <ComboBox fx:id="filterComboBox" prefWidth="150" styleClass="filter-combobox">
+                            <items>
+                                <javafx.collections.FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="All Notes" />
+                                    <String fx:value="Recent" />
+                                    <String fx:value="Favorites" />
+                                    <String fx:value="Completed" />
+                                    <String fx:value="In Progress" />
+                                </javafx.collections.FXCollections>
+                            </items>
+                        </ComboBox>
 
-                        <!-- Content Area for Different Views -->
-                        <StackPane fx:id="contentArea" prefHeight="500.0">
+                        <Region HBox.hgrow="ALWAYS" />
 
-                            <!-- All Tasks View (Table) -->
-                            <VBox fx:id="allTasksView" spacing="15.0">
-                                <HBox alignment="CENTER_LEFT" spacing="15.0">
-                                    <Label styleClass="view-title" text="All Tasks" />
-                                    <Region HBox.hgrow="ALWAYS" />
-                                    <TextField fx:id="searchField" promptText="🔍 Search tasks..." styleClass="search-field-small" />
-                                </HBox>
+                        <Label styleClass="sort-label" text="Sort by:" />
+                        <ComboBox fx:id="sortComboBox" prefWidth="150" styleClass="sort-combobox">
+                            <items>
+                                <javafx.collections.FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Last Modified" />
+                                    <String fx:value="Created Date" />
+                                    <String fx:value="Title A-Z" />
+                                    <String fx:value="Title Z-A" />
+                                </javafx.collections.FXCollections>
+                            </items>
+                        </ComboBox>
 
-                                <TableView fx:id="taskTable" styleClass="modern-task-table">
-                                    <columns>
-                                        <TableColumn fx:id="taskNameCol" prefWidth="250.0" text="Task Name" />
-                                        <TableColumn fx:id="taskStatusCol" prefWidth="120.0" text="Status" />
-                                        <TableColumn fx:id="taskAssignCol" prefWidth="150.0" text="Assigned To" />
-                                        <TableColumn fx:id="taskStartDateCol" prefWidth="120.0" text="Start Date" />
-                                        <TableColumn fx:id="taskDueDateCol" prefWidth="120.0" text="Due Date" />
-                                        <TableColumn fx:id="taskActionsCol" prefWidth="100.0" text="Actions" />
-                                    </columns>
-                                </TableView>
-                            </VBox>
+                        <Button onAction="#toggleGridView" styleClass="view-toggle-btn" text="⋮⋮">
+                            <tooltip>
+                                <Tooltip text="Toggle View" />
+                            </tooltip>
+                        </Button>
+                    </HBox>
 
-                            <!-- By Status View (Kanban Style) -->
-                            <VBox fx:id="byStatusView" spacing="15.0" visible="false" managed="false">
-                                <Label styleClass="view-title" text="Tasks by Status" />
+                    <!-- Notes Grid -->
+                    <ScrollPane fitToWidth="true" prefHeight="500.0" styleClass="notes-grid-scroll">
+                        <FlowPane fx:id="notesGrid" hgap="20.0" prefWrapLength="1000.0" styleClass="notes-grid" vgap="20.0" />
+                    </ScrollPane>
 
-                                <HBox spacing="20.0" styleClass="kanban-container">
-                                    <!-- Not Started Column -->
-                                    <VBox spacing="12.0" styleClass="kanban-column" HBox.hgrow="ALWAYS">
-                                        <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="kanban-header,status-not-started">
-                                            <Label styleClass="kanban-title" text="Not Started" />
-                                            <Region HBox.hgrow="ALWAYS" />
-                                            <Label fx:id="notStartedCount" styleClass="task-count" text="0" />
-                                        </HBox>
-
-                                        <ScrollPane fx:id="notStartedPane" styleClass="kanban-scroll" prefHeight="400.0">
-                                            <VBox fx:id="notStartedTasks" spacing="8.0" styleClass="task-list" />
-                                        </ScrollPane>
-
-                                        <Button styleClass="add-task-kanban" text="+ Add Task"
-                                                onAction="#addTaskToNotStarted" />
-                                    </VBox>
-
-                                    <!-- In Progress Column -->
-                                    <VBox spacing="12.0" styleClass="kanban-column" HBox.hgrow="ALWAYS">
-                                        <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="kanban-header,status-in-progress">
-                                            <Label styleClass="kanban-title" text="In Progress" />
-                                            <Region HBox.hgrow="ALWAYS" />
-                                            <Label fx:id="inProgressCount" styleClass="task-count" text="0" />
-                                        </HBox>
-
-                                        <ScrollPane fx:id="inProgressPane" styleClass="kanban-scroll" prefHeight="400.0">
-                                            <VBox fx:id="inProgressTasks" spacing="8.0" styleClass="task-list" />
-                                        </ScrollPane>
-
-                                        <Button styleClass="add-task-kanban" text="+ Add Task"
-                                                onAction="#addTaskToInProgress" />
-                                    </VBox>
-
-                                    <!-- Complete Column -->
-                                    <VBox spacing="12.0" styleClass="kanban-column" HBox.hgrow="ALWAYS">
-                                        <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="kanban-header,status-complete">
-                                            <Label styleClass="kanban-title" text="Complete" />
-                                            <Region HBox.hgrow="ALWAYS" />
-                                            <Label fx:id="completeCount" styleClass="task-count" text="0" />
-                                        </HBox>
-
-                                        <ScrollPane fx:id="completePane" styleClass="kanban-scroll" prefHeight="400.0">
-                                            <VBox fx:id="completeTasks" spacing="8.0" styleClass="task-list" />
-                                        </ScrollPane>
-
-                                        <Button styleClass="add-task-kanban" text="+ Add Task"
-                                                onAction="#addTaskToComplete" />
-                                    </VBox>
-                                </HBox>
-                            </VBox>
-
-                            <!-- Checklist View -->
-                            <VBox fx:id="checklistView" spacing="15.0" visible="false" managed="false">
-                                <HBox alignment="CENTER_LEFT" spacing="15.0">
-                                    <Label styleClass="view-title" text="Task Checklist" />
-                                    <Region HBox.hgrow="ALWAYS" />
-                                    <Label fx:id="completionProgress" styleClass="completion-progress" text="0/0 completed" />
-                                </HBox>
-
-                                <ScrollPane styleClass="checklist-scroll" prefHeight="450.0">
-                                    <VBox fx:id="checklistContainer" spacing="12.0" styleClass="checklist-container" />
-                                </ScrollPane>
-                            </VBox>
-
-                        </StackPane>
+                    <!-- Empty State (shown when no notes) -->
+                    <VBox fx:id="emptyState" alignment="CENTER" managed="false" spacing="20.0" styleClass="empty-state" visible="false">
+                        <VBox alignment="CENTER" styleClass="empty-state-icon">
+                            <Label styleClass="empty-icon" text="📝" />
+                        </VBox>
+                        <Label styleClass="empty-title" text="No notes yet" />
+                        <Label styleClass="empty-description" text="Create your first note to get started organizing your thoughts and tasks" />
+                        <Button onAction="#showNewNoteDialog" styleClass="empty-action-btn" text="Create First Note" />
                     </VBox>
 
                 </VBox>

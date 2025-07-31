@@ -1,3 +1,346 @@
+/* Import base styles from note.css */
+@import url("note.css");
+@import url("project-detail.css");
+/* Dashboard specific styles */
+.dashboard-header-card {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-border-color: rgba(226, 232, 240, 0.8);
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 20, 0, 0, 4);
+    -fx-padding: 25;
+}
+
+.dashboard-notes-icon {
+    -fx-background-color: linear-gradient(135deg, #667eea, #764ba2);
+    -fx-background-radius: 35;
+    -fx-effect: dropshadow(gaussian, rgba(102, 126, 234, 0.4), 15, 0, 0, 5);
+}
+
+.dashboard-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #1e293b;
+    -fx-letter-spacing: -0.5px;
+}
+
+.dashboard-description {
+    -fx-font-size: 16px;
+    -fx-text-fill: #64748b;
+    -fx-font-weight: 500;
+}
+
+.new-note-button {
+    -fx-background-color: linear-gradient(135deg, #667eea, #764ba2);
+    -fx-text-fill: white;
+    -fx-padding: 14 28 14 28;
+    -fx-background-radius: 12;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(102, 126, 234, 0.4), 12, 0, 0, 4);
+}
+
+.new-note-button:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(102, 126, 234, 0.5), 15, 0, 0, 6);
+}
+
+.search-button {
+    -fx-background-color: rgba(248, 250, 252, 0.8);
+    -fx-text-fill: #64748b;
+    -fx-padding: 14 16 14 16;
+    -fx-background-radius: 12;
+    -fx-border-color: rgba(226, 232, 240, 0.8);
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+}
+
+.search-button:hover {
+    -fx-background-color: rgba(241, 245, 249, 0.9);
+    -fx-border-color: #667eea;
+    -fx-text-fill: #667eea;
+}
+
+.search-container {
+    -fx-padding: 15 0 0 0;
+    -fx-border-color: rgba(226, 232, 240, 0.5);
+    -fx-border-width: 1 0 0 0;
+}
+
+.dashboard-search-field {
+    -fx-background-color: rgba(248, 250, 252, 0.8);
+    -fx-border-color: rgba(226, 232, 240, 0.8);
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 12 16 12 16;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+}
+
+.dashboard-search-field:focused {
+    -fx-border-color: #667eea;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(102, 126, 234, 0.2), 8, 0, 0, 2);
+}
+
+.search-close-btn {
+    -fx-background-color: rgba(239, 68, 68, 0.1);
+    -fx-text-fill: #ef4444;
+    -fx-background-radius: 8;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 8 12 8 12;
+    -fx-font-size: 12px;
+}
+
+.search-close-btn:hover {
+    -fx-background-color: rgba(239, 68, 68, 0.2);
+}
+
+/* Filter and Sort Styles */
+.filter-sort-container {
+    -fx-background-color: rgba(248, 250, 252, 0.6);
+    -fx-background-radius: 15;
+    -fx-border-color: rgba(226, 232, 240, 0.6);
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
+    -fx-padding: 15 20 15 20;
+}
+
+.filter-label, .sort-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #374151;
+}
+
+.filter-combobox, .sort-combobox {
+    -fx-background-color: white;
+    -fx-border-color: rgba(226, 232, 240, 0.8);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 8 12 8 12;
+    -fx-font-size: 13px;
+}
+
+.filter-combobox:focused, .sort-combobox:focused {
+    -fx-border-color: #667eea;
+    -fx-border-width: 2;
+}
+
+.view-toggle-btn {
+    -fx-background-color: white;
+    -fx-text-fill: #64748b;
+    -fx-background-radius: 10;
+    -fx-border-color: rgba(226, 232, 240, 0.8);
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+    -fx-padding: 8 12 8 12;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+}
+
+.view-toggle-btn:hover {
+    -fx-background-color: rgba(248, 250, 252, 0.8);
+    -fx-border-color: #667eea;
+    -fx-text-fill: #667eea;
+}
+
+/* Notes Grid Styles */
+.notes-grid-scroll {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+}
+
+.notes-grid-scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+.notes-grid {
+    -fx-padding: 10;
+    -fx-background-color: transparent;
+}
+
+/* Note Card Styles */
+.note-card {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-border-color: rgba(226, 232, 240, 0.8);
+    -fx-border-width: 1;
+    -fx-border-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.06), 12, 0, 0, 3);
+    -fx-cursor: hand;
+    -fx-padding: 20;
+    -fx-pref-width: 320;
+    -fx-min-height: 200;
+}
+
+.note-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 20, 0, 0, 8);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.note-card-header {
+    -fx-spacing: 12;
+}
+
+.note-icon {
+    -fx-background-color: linear-gradient(135deg, #667eea, #764ba2);
+    -fx-background-radius: 25;
+    -fx-padding: 8;
+    -fx-pref-width: 50;
+    -fx-pref-height: 50;
+}
+
+.note-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #1e293b;
+    -fx-wrap-text: true;
+}
+
+.note-description {
+    -fx-font-size: 14px;
+    -fx-text-fill: #64748b;
+    -fx-font-weight: 500;
+    -fx-wrap-text: true;
+}
+
+.note-stats {
+    -fx-spacing: 15;
+}
+
+.note-stat-item {
+    -fx-spacing: 5;
+}
+
+.note-stat-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: #9ca3af;
+    -fx-font-weight: 500;
+    -fx-text-transform: uppercase;
+}
+
+.note-stat-value {
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #374151;
+}
+
+.note-footer {
+    -fx-spacing: 10;
+}
+
+.note-date {
+    -fx-font-size: 12px;
+    -fx-text-fill: #9ca3af;
+    -fx-font-weight: 500;
+}
+
+.note-actions {
+    -fx-spacing: 8;
+}
+
+.note-action-btn {
+    -fx-background-color: rgba(248, 250, 252, 0.8);
+    -fx-text-fill: #64748b;
+    -fx-background-radius: 8;
+    -fx-border-color: rgba(226, 232, 240, 0.6);
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+    -fx-padding: 6 10 6 10;
+    -fx-font-size: 12px;
+}
+
+.note-action-btn:hover {
+    -fx-background-color: rgba(241, 245, 249, 0.9);
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.note-status-badge {
+    -fx-background-radius: 12;
+    -fx-padding: 4 10 4 10;
+    -fx-font-size: 11px;
+    -fx-font-weight: 600;
+    -fx-text-transform: uppercase;
+}
+
+.status-completed {
+    -fx-background-color: rgba(34, 197, 94, 0.1);
+    -fx-text-fill: #22c55e;
+}
+
+.status-in-progress {
+    -fx-background-color: rgba(251, 191, 36, 0.1);
+    -fx-text-fill: #fbbf24;
+}
+
+.status-not-started {
+    -fx-background-color: rgba(239, 68, 68, 0.1);
+    -fx-text-fill: #ef4444;
+}
+
+/* Empty State Styles */
+.empty-state {
+    -fx-padding: 60 40 60 40;
+}
+
+.empty-state-icon {
+    -fx-background-color: rgba(102, 126, 234, 0.1);
+    -fx-background-radius: 50;
+    -fx-padding: 30;
+    -fx-pref-width: 100;
+    -fx-pref-height: 100;
+}
+
+.empty-icon {
+    -fx-font-size: 40px;
+}
+
+.empty-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #1e293b;
+}
+
+.empty-description {
+    -fx-font-size: 16px;
+    -fx-text-fill: #64748b;
+    -fx-font-weight: 500;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-max-width: 400;
+}
+
+.empty-action-btn {
+    -fx-background-color: linear-gradient(135deg, #667eea, #764ba2);
+    -fx-text-fill: white;
+    -fx-padding: 12 24 12 24;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(102, 126, 234, 0.4), 12, 0, 0, 4);
+}
+
+.empty-action-btn:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* Animation transitions */
+.note-card, .new-note-button, .search-button, .note-action-btn, .empty-action-btn {
+    -fx-transition: all 0.3s ease;
+}
 /* Import base styles from project-detail.css */
 @import url("project-detail.css");
 
